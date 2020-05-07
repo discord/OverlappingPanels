@@ -1,0 +1,37 @@
+buildscript {
+    ext.kotlin_version = '1.3.61'
+    ext.ktlintVersion = '0.36.0'
+    ext.ktlintGradlePluginVersion = '9.2.1'
+
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://plugins.gradle.org/m2/' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.6.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        // Plugin for ktlint
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:$ktlintGradlePluginVersion"
+    }
+}
+
+// ktlint gradle plugin
+apply plugin: "org.jlleitschuh.gradle.ktlint"
+
+subprojects {
+    apply plugin: "org.jlleitschuh.gradle.ktlint"
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

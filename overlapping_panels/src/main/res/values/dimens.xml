@@ -1,0 +1,8 @@
+<resources>
+    <dimen name="overlapping_panels_scroll_slop">8dp</dimen>
+    <dimen name="overlapping_panels_min_fling_dp_per_second">240dp</dimen>
+    <dimen name="overlapping_panels_closed_center_panel_visible_width">48dp</dimen>
+    <dimen name="overlapping_panels_center_panel_non_resting_elevation">8dp</dimen>
+    <dimen name="overlapping_panels_home_gesture_from_bottom_threshold">32dp</dimen>
+    <dimen name="overlapping_panels_margin_between_panels">8dp</dimen>
+</resources>

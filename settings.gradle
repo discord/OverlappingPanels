@@ -1,0 +1,3 @@
+rootProject.name='Overlapping Panels'
+include ':sample_app'
+include ':overlapping_panels'
