@@ -86,7 +86,7 @@ open class OverlappingPanelsLayout : FrameLayout {
   private var startPanelState: PanelState = PanelState.Closed
   private var endPanelState: PanelState = PanelState.Closed
 
-  private var useFullPortraitWidthForStartPanel: Boolean = false
+  private var useFullWidthForStartPanel: Boolean = false
 
   private var pendingUpdate: (() -> Unit)? = null
 
@@ -117,7 +117,7 @@ open class OverlappingPanelsLayout : FrameLayout {
   constructor(context: Context) : super(context)
 
   constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs) {
-    initialize()
+    initialize(attrs)
   }
 
   constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : super(
@@ -125,10 +125,10 @@ open class OverlappingPanelsLayout : FrameLayout {
     attrs,
     defStyleAttr
   ) {
-    initialize()
+    initialize(attrs)
   }
 
-  private fun initialize() {
+  private fun initialize(attrs: AttributeSet?) {
     val locale = LocaleProvider.getPrimaryLocale(context)
     isLeftToRight = TextUtils.getLayoutDirectionFromLocale(locale) == View.LAYOUT_DIRECTION_LTR
     scrollingSlopPx = resources.getDimension(R.dimen.overlapping_panels_scroll_slop)
@@ -150,6 +150,25 @@ open class OverlappingPanelsLayout : FrameLayout {
 
     nonFullScreenSidePanelWidth =
       (portraitModeWidth - marginBetweenPanels - visibleWidthOfClosedCenterPanel).toInt()
+
+    val styledAttrs = context.obtainStyledAttributes(
+      attrs,
+      R.styleable.OverlappingPanelsLayout,
+      0,
+      0
+    )
+
+    try {
+      val maxSidePanelNonFullScreenWidth =
+        styledAttrs.getDimension(
+          R.styleable.OverlappingPanelsLayout_maxSidePanelNonFullScreenWidth,
+          Int.MAX_VALUE.toFloat()
+        ).toInt()
+
+      nonFullScreenSidePanelWidth = min(nonFullScreenSidePanelWidth, maxSidePanelNonFullScreenWidth)
+    } finally {
+      styledAttrs.recycle()
+    }
   }
 
   override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
@@ -304,7 +323,7 @@ open class OverlappingPanelsLayout : FrameLayout {
   }
 
   fun setStartPanelUseFullPortraitWidth(useFullPortraitWidth: Boolean) {
-    useFullPortraitWidthForStartPanel = useFullPortraitWidth
+    useFullWidthForStartPanel = useFullPortraitWidth
     resetStartPanelWidth()
   }
 
@@ -315,7 +334,7 @@ open class OverlappingPanelsLayout : FrameLayout {
   private fun resetStartPanelWidth() {
     if (::startPanel.isInitialized) {
       val layoutParams = startPanel.layoutParams
-      layoutParams.width = if (useFullPortraitWidthForStartPanel) {
+      layoutParams.width = if (useFullWidthForStartPanel) {
         ViewGroup.LayoutParams.MATCH_PARENT
       } else {
         nonFullScreenSidePanelWidth
@@ -715,7 +734,7 @@ open class OverlappingPanelsLayout : FrameLayout {
     endPanel.elevation = 0f
 
     // OverlappingPanelsLayout controls the widths of the side panel views depending
-    // on state like useFullPortraitWidthForLeftPanel and the portrait mode width
+    // on state like useFullPortraitWidthForStartPanel and the portrait mode width
     // of the device.
     resetStartPanelWidth()
     resetEndPanelWidth()

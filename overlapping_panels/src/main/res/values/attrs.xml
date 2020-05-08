@@ -1,0 +1,12 @@
+<resources>
+    <declare-styleable name="OverlappingPanelsLayout">
+        <!--
+         The side panel width will be the minimum between (1) this maxSidePanelNonFullScreenWidth
+         and (2) the default side panel width determined by the portrait mode screen width
+         minus the margin between panels and the width of the visible closed center panel.
+         This is most useful for setting a side panel width on tablets.
+         This max width does not apply when useFullPortraitWidthForStartPanel is true.
+         -->
+        <attr name="maxSidePanelNonFullScreenWidth" format="dimension|reference" />
+    </declare-styleable>
+</resources>
