@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply from: "../ktlint.gradle"
 
 android {
     compileSdkVersion 29
@@ -23,6 +24,20 @@ android {
         }
     }
 
+    lintOptions {
+
+        // Used to hard fail on errors.
+        abortOnError true
+
+        // Used to consider all warnings as errors.
+        warningsAsErrors true
+
+        // Used to process sub modules.
+        checkDependencies true
+
+        // Used specific lint checks and suppression.
+        lintConfig file("../tools/lint.xml")
+    }
 }
 
 dependencies {
@@ -35,3 +50,14 @@ dependencies {
 
     testImplementation "junit:junit:$junitVersion"
 }
+
+check.dependsOn ktlintCheck
+
+
+//tasks.whenTaskAdded { task ->
+//    def name = task.name
+//
+//    if (name.startsWith("lint")) {
+//        task.dependsOn "ktlintCheck"
+//    }
+//}
