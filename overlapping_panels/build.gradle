@@ -34,5 +34,3 @@ dependencies {
 
     testImplementation "junit:junit:$junitVersion"
 }
-
-check.dependsOn ktlintCheck
