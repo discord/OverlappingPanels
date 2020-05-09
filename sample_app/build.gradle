@@ -20,7 +20,6 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -52,12 +51,3 @@ dependencies {
 }
 
 check.dependsOn ktlintCheck
-
-
-//tasks.whenTaskAdded { task ->
-//    def name = task.name
-//
-//    if (name.startsWith("lint")) {
-//        task.dependsOn "ktlintCheck"
-//    }
-//}

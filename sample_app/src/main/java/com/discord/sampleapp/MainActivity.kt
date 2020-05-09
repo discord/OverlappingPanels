@@ -1,4 +1,4 @@
-package com.discord.panels
+package com.discord.sampleapp
 
 import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
