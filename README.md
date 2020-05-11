@@ -2,9 +2,9 @@
 
 OverlappingPanels is a gestures-driven navigation UI library for Android. Compared to DrawerLayout
 gestures, OverlappingPanels gestures are much less likely to conflict with Android 10's system back
-gestures. By default, OverlappingPanels handles swipe gestures across its entire layout and not
-only from the edges of the screen. OverlappingPanels can act as a secondary navigation component
-in apps that use a bottom navigation bar / tabs as a primary navigation component.
+gestures because `OverlappingPanelsLayout` handles swipe gestures across its entire layout and not
+only from the edges of the screen. OverlappingPanels can act as a secondary navigation component in
+apps that use a bottom navigation bar / tabs as a primary navigation component.
 
 
 Basic Usage
