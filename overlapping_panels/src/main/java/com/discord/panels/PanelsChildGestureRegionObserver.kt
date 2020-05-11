@@ -5,6 +5,23 @@ import android.view.View
 import androidx.annotation.UiThread
 import java.lang.ref.WeakReference
 
+/**
+ * Use [PanelsChildGestureRegionObserver] to register child gesture regions that should handle
+ * their own horizontal scrolls rather than defaulting to [OverlappingPanelsLayout] handling
+ * the horizontal scrolls as panel-swipe gestures.
+ *
+ * Example usage:
+ * 1) Use [PanelsChildGestureRegionObserver.Provider.get] to get an Activity-scoped instance of
+ * [PanelsChildGestureRegionObserver]
+ * 2) Add the [PanelsChildGestureRegionObserver] instance as an android.view.OnLayoutChangeListener
+ * to each child view.
+ * 3) In the parent of [OverlappingPanelsLayout], e.g. in a Fragment or Activity, implement
+ * [GestureRegionsListener], and add the listener via [addGestureRegionsUpdateListener]
+ * 4) Inside [GestureRegionsListener.onGestureRegionsUpdate], pass the child gesture regions to
+ * [OverlappingPanelsLayout].
+ * 5) Remember to remove views and listeners from [PanelsChildGestureRegionObserver] with [remove]
+ * and [removeGestureRegionsUpdateListener] in appropriate Android lifecycle methods.
+ */
 class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
 
   interface GestureRegionsListener {
@@ -38,22 +55,31 @@ class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
       val absoluteBottom = y + bottom
 
       viewIdToGestureRegionMap[view.id] = Rect(
-          absoluteLeft,
-          absoluteTop,
-          absoluteRight,
-          absoluteBottom
+        absoluteLeft,
+        absoluteTop,
+        absoluteRight,
+        absoluteBottom
       )
 
       publishGestureRegionsUpdate()
     }
   }
 
+  /**
+   * Stop publishing gesture region updates based on layout changes to android.view.View
+   * corresponding to [viewId].
+   */
   @UiThread
   fun remove(viewId: Int) {
     viewIdToGestureRegionMap.remove(viewId)
     publishGestureRegionsUpdate()
   }
 
+  /**
+   * Add [gestureRegionsListener] to this [PanelsChildGestureRegionObserver]. This method notifies
+   * that listener as soon as it adds the listener. That listener will continue to get future
+   * updates from layout changes on child gesture regions.
+   */
   @UiThread
   fun addGestureRegionsUpdateListener(gestureRegionsListener: GestureRegionsListener) {
     val gestureRegions = viewIdToGestureRegionMap.values.toList()
@@ -61,6 +87,9 @@ class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
     gestureRegionsListeners.add(gestureRegionsListener)
   }
 
+  /**
+   * Remove [gestureRegionsListener] from the set of listeners to notify.
+   */
   @UiThread
   fun removeGestureRegionsUpdateListener(gestureRegionsListener: GestureRegionsListener) {
     gestureRegionsListeners.remove(gestureRegionsListener)

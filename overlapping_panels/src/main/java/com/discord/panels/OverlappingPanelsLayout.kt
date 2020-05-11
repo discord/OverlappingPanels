@@ -306,18 +306,34 @@ open class OverlappingPanelsLayout : FrameLayout {
     }
   }
 
+  /**
+   * Open the start panel with the non-fling animation.
+   */
   fun openStartPanel() {
     openStartPanel(isFling = false)
   }
 
+  /**
+   * Open the end panel with the non-fling animation.
+   */
   fun openEndPanel() {
     openEndPanel(isFling = false)
   }
 
+  /**
+   * Close side panels with the non-fling animation. This centers the center panel.
+   */
   fun closePanels() {
     closePanels(isFling = false)
   }
 
+  /**
+   * Set the lock panel state for the start panel. [LockState.OPEN] means the start panel stays
+   * opened, and the center panel cannot be moved. [LockState.CLOSE] means the start panel stays
+   * closed, and the selected panel can either be the center panel or the end panel.
+   * [LockState.UNLOCKED] is the default [LockState] and means that the center panel can move freely
+   * to open either of the two side panels.
+   */
   fun setStartPanelLockState(lockState: LockState) {
     startPanelLockState = lockState
     if (lockState == LockState.OPEN) {
@@ -325,6 +341,13 @@ open class OverlappingPanelsLayout : FrameLayout {
     }
   }
 
+  /**
+   * Set the lock panel state for the end panel. [LockState.OPEN] means the end panel stays
+   * opened, and the center panel cannot be moved. [LockState.CLOSE] means the end panel stays
+   * closed, and the selected panel can either be the center panel or the start panel.
+   * [LockState.UNLOCKED] is the default [LockState] and means that the center panel can move freely
+   * to open either of the two side panels.
+   */
   fun setEndPanelLockState(lockState: LockState) {
     endPanelLockState = lockState
     if (lockState == LockState.OPEN) {
@@ -332,51 +355,64 @@ open class OverlappingPanelsLayout : FrameLayout {
     }
   }
 
+  /**
+   * By default, [OverlappingPanelsLayout] sets the start panel width so that when the start panel
+   * is opened, it leaves room to show the partially visible closed center panel. To make the start
+   * panel fill the full screen width, call [setStartPanelUseFullPortraitWidth] with
+   * [useFullPortraitWidth] set to true.
+   */
   fun setStartPanelUseFullPortraitWidth(useFullPortraitWidth: Boolean) {
     useFullWidthForStartPanel = useFullPortraitWidth
     resetStartPanelWidth()
   }
 
+  /**
+   * By default, [OverlappingPanelsLayout] intercepts horizontal scrolls on all child views and
+   * handles them by swiping the panels. To allow child views to handle their own horizontal
+   * scroll gestures, call [setChildGestureRegions] where the [Rect] represents the region where
+   * [OverlappingPanelsLayout] should not handle horizontal scrolls. The best way to register
+   * child gesture regions is via [PanelsChildGestureRegionObserver].
+   */
   fun setChildGestureRegions(childGestureRegions: List<Rect>) {
     this.childGestureRegions = childGestureRegions
   }
 
-  private fun resetStartPanelWidth() {
-    if (::startPanel.isInitialized) {
-      val layoutParams = startPanel.layoutParams
-      layoutParams.width = if (useFullWidthForStartPanel) {
-        ViewGroup.LayoutParams.MATCH_PARENT
-      } else {
-        nonFullScreenSidePanelWidth
-      }
-      startPanel.layoutParams = layoutParams
-    }
-  }
-
-  private fun resetEndPanelWidth() {
-    val layoutParams = endPanel.layoutParams
-    layoutParams.width = nonFullScreenSidePanelWidth
-    endPanel.layoutParams = layoutParams
-  }
-
+  /**
+   * Register one or multiple [PanelStateListener]s for the start panel. This is useful for
+   * storing the panel state, e.g. in an androidx.lifecycle.ViewModel, so the panel state can be
+   * restored after Android configuration changes.
+   */
   fun registerStartPanelStateListeners(vararg panelStateListenerArgs: PanelStateListener) {
     for (panelStateListener in panelStateListenerArgs) {
       startPanelStateListeners.add(panelStateListener)
     }
   }
 
+  /**
+   * Register one or multiple [PanelStateListener]s for the end panel. This is useful for
+   * storing the panel state, e.g. in an androidx.lifecycle.ViewModel, so the panel state can be
+   * restored after Android configuration changes.
+   */
   fun registerEndPanelStateListeners(vararg panelStateListenerArgs: PanelStateListener) {
     for (panelStateListener in panelStateListenerArgs) {
       endPanelStateListeners.add(panelStateListener)
     }
   }
 
+  /**
+   * Get the currently selected [Panel]. If the [Panel] is currently in between opened and closed
+   * states, then get the selected panel based on the last opened or closed panel state.
+   */
   fun getSelectedPanel(): Panel = selectedPanel
 
   /**
-   * Diff [startPanelState] with the actual drawer state before opening or closing panels.
-   * This allows us to keep the drawer state the same across configuration changes without
-   * an infinite loop of syncing updates between the view and the store.
+   * Handle panel state changes from the app. This can be used for restoring state after Android
+   * configuration changes or for changing the panel state based on business logic on classes
+   * that don't have access to the view.
+   *
+   * This diffs [startPanelState] with the actual panel state before opening or closing panels.
+   * This allows us to update the panel state without an infinite loop of syncing updates between
+   * the view and model layer.
    */
   fun handleStartPanelState(startPanelState: PanelState) {
     val previousStartPanelState = this.startPanelState
@@ -396,9 +432,13 @@ open class OverlappingPanelsLayout : FrameLayout {
   }
 
   /**
-   * Diff [endPanelState] with the actual drawer state before opening or closing panels.
-   * This allows us to keep the drawer state the same across configuration changes without
-   * an infinite loop of syncing updates between the view and the store.
+   * Handle panel state changes from the app. This can be used for restoring state after Android
+   * configuration changes or for changing the panel state based on business logic on classes
+   * that don't have access to the view.
+   *
+   * This diffs [endPanelState] with the actual panel state before opening or closing panels.
+   * This allows us to update the panel state without an infinite loop of syncing updates between
+   * the view and model layer.
    */
   fun handleEndPanelState(endPanelState: PanelState) {
     val previousEndPanelState = this.endPanelState
@@ -416,6 +456,24 @@ open class OverlappingPanelsLayout : FrameLayout {
     }
 
     this.endPanelState = endPanelState
+  }
+
+  private fun resetStartPanelWidth() {
+    if (::startPanel.isInitialized) {
+      val layoutParams = startPanel.layoutParams
+      layoutParams.width = if (useFullWidthForStartPanel) {
+        ViewGroup.LayoutParams.MATCH_PARENT
+      } else {
+        nonFullScreenSidePanelWidth
+      }
+      startPanel.layoutParams = layoutParams
+    }
+  }
+
+  private fun resetEndPanelWidth() {
+    val layoutParams = endPanel.layoutParams
+    layoutParams.width = nonFullScreenSidePanelWidth
+    endPanel.layoutParams = layoutParams
   }
 
   private fun openPanel(panel: Panel) {
