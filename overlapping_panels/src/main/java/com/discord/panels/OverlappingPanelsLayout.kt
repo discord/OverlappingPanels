@@ -229,8 +229,6 @@ open class OverlappingPanelsLayout : FrameLayout {
             abs(xDiff) > abs(yDiff) &&
             !isTouchingChildGestureRegion
           ) {
-            swipeDirection = if (xDiff > 0) SwipeDirection.RIGHT else SwipeDirection.LEFT
-
             isScrollingHorizontally = true
             true
           } else {
@@ -262,6 +260,18 @@ open class OverlappingPanelsLayout : FrameLayout {
         true
       }
       MotionEvent.ACTION_MOVE -> {
+        if (isTouchingChildGestureRegion(event)) {
+          return false
+        }
+
+        val xDiff = calculateDistanceX(startX = xFromInterceptActionDown, event = event)
+
+        if (abs(xDiff) > scrollingSlopPx) {
+          if (swipeDirection == null) {
+            swipeDirection = if (xDiff > 0) SwipeDirection.RIGHT else SwipeDirection.LEFT
+          }
+        }
+
         velocityTracker?.addMovement(event)
 
         if (shouldHandleActionMoveEvent(event)) {

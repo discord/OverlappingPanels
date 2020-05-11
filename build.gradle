@@ -6,6 +6,7 @@ buildscript {
     ext.ktlintVersion = '0.36.0'
     ext.ktlintGradlePluginVersion = '9.2.1'
     ext.junitVersion = '4.12'
+    ext.rxJavaVersion = '3.0.3'
 
     repositories {
         google()
