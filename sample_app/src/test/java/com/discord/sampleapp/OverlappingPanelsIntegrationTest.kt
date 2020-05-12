@@ -174,6 +174,9 @@ class OverlappingPanelsIntegrationTest {
     runPendingAnimations()
     Truth.assertThat(startPanelState).isEqualTo(PanelState.Closed)
     Truth.assertThat(endPanelState).isEqualTo(PanelState.Closed)
+
+    // temporarily create a bad assertion to make sure CI runs this
+    Truth.assertThat(endPanelState).isEqualTo(PanelState.Opened(isLocked = false))
   }
 
   private fun runPendingAnimations() {
