@@ -51,7 +51,8 @@ class MainActivity : AppCompatActivity(),
       PanelsChildGestureRegionObserver.Provider.get()
     )
 
-    viewModel = ViewModelProvider(this,
+    viewModel = ViewModelProvider(
+      this,
       MainViewModel.Factory()
     ).get(MainViewModel::class.java)
   }
