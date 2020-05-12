@@ -1,10 +1,14 @@
-package com.discord.panels
+package com.discord.sampleapp
 
 import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import com.discord.panels.MainViewModel
+import com.discord.panels.OverlappingPanelsLayout
+import com.discord.panels.PanelState
+import com.discord.panels.PanelsChildGestureRegionObserver
 import io.reactivex.rxjava3.disposables.Disposable
 
 class MainActivity : AppCompatActivity(), PanelsChildGestureRegionObserver.GestureRegionsListener {
