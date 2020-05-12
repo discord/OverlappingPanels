@@ -26,7 +26,7 @@ dependencies {
 ```
 
 Replace `x`, `y`, and `z` with the corresponding release version numbers in the
-[OverlappingPanels release page] (https://github.com/discord/OverlappingPanels/releases).
+[OverlappingPanels release page](https://github.com/discord/OverlappingPanels/releases).
 
 
 Basic Usage
@@ -75,7 +75,7 @@ swiping left and right will open and close the corresponding side panels.
 
 Core Features
 -------
-Check out the [Overlapping Panels sample app] (https://github.com/discord/OverlappingPanels/tree/master/sample_app)
+Check out the [Overlapping Panels sample app](https://github.com/discord/OverlappingPanels/tree/master/sample_app)
 for examples on how to use the core features of `OverlappingPanelsLayout`:
 
 1. Panel gestures
