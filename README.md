@@ -6,6 +6,28 @@ gestures because `OverlappingPanelsLayout` handles swipe gestures across its ent
 only from the edges of the screen. OverlappingPanels can act as a secondary navigation component in
 apps that use a bottom navigation bar / tabs as a primary navigation component.
 
+Installation
+-------
+Add the JitPack repository to your root `build.gradle` file:
+```groovy
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+Then add the OverlappingPanels gradle dependency:
+```groovy
+dependencies {
+    implementation 'com.github.discord:OverlappingPanels:x.y.z'
+}
+```
+
+Replace `x`, `y`, and `z` with the corresponding release version numbers in the
+[OverlappingPanels release page](https://github.com/discord/OverlappingPanels/releases).
+
 
 Basic Usage
 -------
@@ -53,7 +75,7 @@ swiping left and right will open and close the corresponding side panels.
 
 Core Features
 -------
-Check out the [Overlapping Panels sample app] (https://github.com/discord/OverlappingPanels/tree/master/sample_app)
+Check out the [Overlapping Panels sample app](https://github.com/discord/OverlappingPanels/tree/master/sample_app)
 for examples on how to use the core features of `OverlappingPanelsLayout`:
 
 1. Panel gestures
