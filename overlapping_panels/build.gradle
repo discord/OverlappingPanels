@@ -32,5 +32,10 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
     implementation "androidx.core:core-ktx:$androidxCoreVersion"
 
-    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "com.google.truth:truth:$truthVersion"
+    androidTestImplementation("org.robolectric:robolectric:$robolectricVersion") {
+        exclude group: "org.apache.maven.wagon"
+        exclude group: "org.apache.maven"
+    }
 }
