@@ -63,16 +63,14 @@ class MainActivity : AppCompatActivity(),
     // Save the panel state in the view model, so we can restore the panel state after
     // a device rotation.
     overlappingPanels
-      .registerStartPanelStateListeners(object :
-        OverlappingPanelsLayout.PanelStateListener {
+      .registerStartPanelStateListeners(object : OverlappingPanelsLayout.PanelStateListener {
         override fun onPanelStateChange(panelState: PanelState) {
           viewModel.onStartPanelStateChange(panelState)
         }
       })
 
     overlappingPanels
-      .registerEndPanelStateListeners(object :
-        OverlappingPanelsLayout.PanelStateListener {
+      .registerEndPanelStateListeners(object : OverlappingPanelsLayout.PanelStateListener {
         override fun onPanelStateChange(panelState: PanelState) {
           viewModel.onEndPanelStateChange(panelState)
         }

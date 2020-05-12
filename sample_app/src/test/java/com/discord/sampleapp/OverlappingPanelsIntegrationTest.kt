@@ -50,16 +50,14 @@ class OverlappingPanelsIntegrationTest {
     var endPanelState: PanelState? = null
 
     overlappingPanelsLayout
-      .registerStartPanelStateListeners(object :
-        OverlappingPanelsLayout.PanelStateListener {
+      .registerStartPanelStateListeners(object : OverlappingPanelsLayout.PanelStateListener {
         override fun onPanelStateChange(panelState: PanelState) {
           startPanelState = panelState
         }
       })
 
     overlappingPanelsLayout
-      .registerEndPanelStateListeners(object :
-        OverlappingPanelsLayout.PanelStateListener {
+      .registerEndPanelStateListeners(object : OverlappingPanelsLayout.PanelStateListener {
         override fun onPanelStateChange(panelState: PanelState) {
           endPanelState = panelState
         }
@@ -85,16 +83,14 @@ class OverlappingPanelsIntegrationTest {
     var endPanelState: PanelState? = null
 
     overlappingPanelsLayout
-      .registerStartPanelStateListeners(object :
-        OverlappingPanelsLayout.PanelStateListener {
+      .registerStartPanelStateListeners(object : OverlappingPanelsLayout.PanelStateListener {
         override fun onPanelStateChange(panelState: PanelState) {
           startPanelState = panelState
         }
       })
 
     overlappingPanelsLayout
-      .registerEndPanelStateListeners(object :
-        OverlappingPanelsLayout.PanelStateListener {
+      .registerEndPanelStateListeners(object : OverlappingPanelsLayout.PanelStateListener {
         override fun onPanelStateChange(panelState: PanelState) {
           endPanelState = panelState
         }
@@ -119,8 +115,7 @@ class OverlappingPanelsIntegrationTest {
     var startPanelState: PanelState? = null
 
     overlappingPanelsLayout
-      .registerStartPanelStateListeners(object :
-        OverlappingPanelsLayout.PanelStateListener {
+      .registerStartPanelStateListeners(object : OverlappingPanelsLayout.PanelStateListener {
         override fun onPanelStateChange(panelState: PanelState) {
           startPanelState = panelState
         }
@@ -137,8 +132,7 @@ class OverlappingPanelsIntegrationTest {
     var endPanelState: PanelState? = null
 
     overlappingPanelsLayout
-      .registerEndPanelStateListeners(object :
-        OverlappingPanelsLayout.PanelStateListener {
+      .registerEndPanelStateListeners(object : OverlappingPanelsLayout.PanelStateListener {
         override fun onPanelStateChange(panelState: PanelState) {
           endPanelState = panelState
         }
@@ -156,16 +150,14 @@ class OverlappingPanelsIntegrationTest {
     var endPanelState: PanelState? = null
 
     overlappingPanelsLayout
-      .registerStartPanelStateListeners(object :
-        OverlappingPanelsLayout.PanelStateListener {
+      .registerStartPanelStateListeners(object : OverlappingPanelsLayout.PanelStateListener {
         override fun onPanelStateChange(panelState: PanelState) {
           startPanelState = panelState
         }
       })
 
     overlappingPanelsLayout
-      .registerEndPanelStateListeners(object :
-        OverlappingPanelsLayout.PanelStateListener {
+      .registerEndPanelStateListeners(object : OverlappingPanelsLayout.PanelStateListener {
         override fun onPanelStateChange(panelState: PanelState) {
           endPanelState = panelState
         }
