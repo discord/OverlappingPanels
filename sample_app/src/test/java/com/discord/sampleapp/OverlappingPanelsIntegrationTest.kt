@@ -37,7 +37,6 @@ class OverlappingPanelsIntegrationTest {
     val root =
       LayoutInflater.from(activity).inflate(R.layout.main_activity /* resource */, null /* root */)
     overlappingPanelsLayout = root.findViewById(R.id.overlapping_panels) as OverlappingPanelsLayout
-    overlappingPanelsLayout.requestLayout()
     overlappingPanelsLayout.layout(0 /* l */, 0 /* t */, 480 /* r */, 480 /* b */)
   }
 
