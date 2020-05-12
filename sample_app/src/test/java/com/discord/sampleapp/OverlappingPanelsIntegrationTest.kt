@@ -80,7 +80,7 @@ class OverlappingPanelsIntegrationTest {
   }
 
   @Test
-  fun swipeLeftOpensStartPanel() {
+  fun swipeLeftOpensEndPanel() {
     var startPanelState: PanelState? = null
     var endPanelState: PanelState? = null
 
