@@ -29,7 +29,7 @@
 
             <TextView
                 style="@style/PanelHeader"
-                android:text="Start Panel" />
+                android:text="@string/start_panel_name" />
 
         </LinearLayout>
 
@@ -43,11 +43,11 @@
             <TextView
                 style="@style/PanelHeader"
                 android:layout_marginBottom="32dp"
-                android:text="Center Panel" />
+                android:text="@string/center_panel_name" />
 
             <TextView
                 style="@style/PanelBodyText"
-                android:text="Swipe left or right to open side panels with gestures." />
+                android:text="@string/swipe_gesture_instructions" />
 
             <View
                 android:layout_width="match_parent"
@@ -57,14 +57,14 @@
             <TextView
                 style="@style/PanelBodyText"
                 android:layout_marginBottom="16dp"
-                android:text="Alternatively, call methods like openStartPanel() (e.g. in response to a button click)." />
+                android:text="@string/open_start_panel_instructions" />
 
             <Button
                 android:id="@+id/open_start_panel_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Open Start Panel" />
+                android:text="@string/open_start_panel_button_text" />
 
             <View
                 android:layout_width="match_parent"
@@ -74,7 +74,7 @@
             <TextView
                 style="@style/PanelBodyText"
                 android:layout_marginBottom="16dp"
-                android:text="Use PanelsChildGestureRegionObserver to not handle panel gestures on selected child views." />
+                android:text="@string/child_gesture_region_instructions" />
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -83,29 +83,29 @@
 
                 <LinearLayout
                     android:id="@+id/scroll_items_container"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
                         style="@style/PanelChildHorizontalScrollViewItem"
-                        android:text="scroll item 1" />
+                        android:text="@string/scroll_item_1" />
 
                     <TextView
                         style="@style/PanelChildHorizontalScrollViewItem"
-                        android:text="scroll item 2" />
+                        android:text="@string/scroll_item_2" />
 
                     <TextView
                         style="@style/PanelChildHorizontalScrollViewItem"
-                        android:text="scroll item 3" />
+                        android:text="@string/scroll_item_3" />
 
                     <TextView
                         style="@style/PanelChildHorizontalScrollViewItem"
-                        android:text="scroll item 4" />
+                        android:text="@string/scroll_item_4" />
 
                     <TextView
                         style="@style/PanelChildHorizontalScrollViewItem"
-                        android:text="scroll item 5" />
+                        android:text="@string/scroll_item_5" />
 
                 </LinearLayout>
 
@@ -123,7 +123,7 @@
 
             <TextView
                 style="@style/PanelHeader"
-                android:text="End Panel" />
+                android:text="@string/end_panel_name" />
 
         </LinearLayout>
 
