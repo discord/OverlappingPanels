@@ -753,13 +753,13 @@ open class OverlappingPanelsLayout : FrameLayout {
     }
 
     startPanelState = getStartPanelState(previousX, x)
-    for (leftPanelStateListener in startPanelStateListeners) {
-      leftPanelStateListener.onPanelStateChange(startPanelState)
+    for (startPanelStateListener in startPanelStateListeners) {
+      startPanelStateListener.onPanelStateChange(startPanelState)
     }
 
     endPanelState = getEndPanelState(previousX, x)
-    for (rightPanelStateListener in endPanelStateListeners) {
-      rightPanelStateListener.onPanelStateChange(endPanelState)
+    for (endPanelStateListener in endPanelStateListeners) {
+      endPanelStateListener.onPanelStateChange(endPanelState)
     }
   }
 

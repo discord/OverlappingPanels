@@ -5,13 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import com.discord.panels.MainViewModel
 import com.discord.panels.OverlappingPanelsLayout
 import com.discord.panels.PanelState
 import com.discord.panels.PanelsChildGestureRegionObserver
 import io.reactivex.rxjava3.disposables.Disposable
 
-class MainActivity : AppCompatActivity(), PanelsChildGestureRegionObserver.GestureRegionsListener {
+class MainActivity : AppCompatActivity(),
+  PanelsChildGestureRegionObserver.GestureRegionsListener {
 
   private lateinit var viewModel: MainViewModel
   private var viewStateDisposable: Disposable? = null
@@ -51,7 +51,9 @@ class MainActivity : AppCompatActivity(), PanelsChildGestureRegionObserver.Gestu
       PanelsChildGestureRegionObserver.Provider.get()
     )
 
-    viewModel = ViewModelProvider(this, MainViewModel.Factory()).get(MainViewModel::class.java)
+    viewModel = ViewModelProvider(this,
+      MainViewModel.Factory()
+    ).get(MainViewModel::class.java)
   }
 
   override fun onResume() {
@@ -60,14 +62,16 @@ class MainActivity : AppCompatActivity(), PanelsChildGestureRegionObserver.Gestu
     // Save the panel state in the view model, so we can restore the panel state after
     // a device rotation.
     overlappingPanels
-      .registerStartPanelStateListeners(object : OverlappingPanelsLayout.PanelStateListener {
+      .registerStartPanelStateListeners(object :
+        OverlappingPanelsLayout.PanelStateListener {
         override fun onPanelStateChange(panelState: PanelState) {
           viewModel.onStartPanelStateChange(panelState)
         }
       })
 
     overlappingPanels
-      .registerEndPanelStateListeners(object : OverlappingPanelsLayout.PanelStateListener {
+      .registerEndPanelStateListeners(object :
+        OverlappingPanelsLayout.PanelStateListener {
         override fun onPanelStateChange(panelState: PanelState) {
           viewModel.onEndPanelStateChange(panelState)
         }
