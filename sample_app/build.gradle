@@ -31,7 +31,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
     implementation "androidx.core:core-ktx:$androidxCoreVersion"
     implementation "io.reactivex.rxjava3:rxjava:$rxJavaVersion"
-    implementation project(path: ':overlapping_panels')
+    implementation project(':overlapping_panels')
 
     testImplementation "junit:junit:$junitVersion"
 }
