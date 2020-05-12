@@ -1,6 +1,7 @@
 package com.discord.sampleapp
 
 import android.app.Activity
+import android.os.Build
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -15,8 +16,10 @@ import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
+import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
 
+@Config(sdk = [Build.VERSION_CODES.P])
 @LooperMode(LooperMode.Mode.PAUSED)
 @RunWith(RobolectricTestRunner::class)
 class OverlappingPanelsIntegrationTest {
@@ -174,9 +177,6 @@ class OverlappingPanelsIntegrationTest {
     runPendingAnimations()
     Truth.assertThat(startPanelState).isEqualTo(PanelState.Closed)
     Truth.assertThat(endPanelState).isEqualTo(PanelState.Closed)
-
-    // temporarily create a bad assertion to make sure CI runs this
-    Truth.assertThat(endPanelState).isEqualTo(PanelState.Opened(isLocked = false))
   }
 
   private fun runPendingAnimations() {
