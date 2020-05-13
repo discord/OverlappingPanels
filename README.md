@@ -6,6 +6,11 @@ gestures because `OverlappingPanelsLayout` handles swipe gestures across its ent
 only from the edges of the screen. OverlappingPanels can act as a secondary navigation component in
 apps that use a bottom navigation bar / tabs as a primary navigation component.
 
+**OverlappingPanels Examples**
+| OverlappingPanels Sample App | Discord Android App |
+| -- | -- |
+| ![alt text](readme_assets/sample_app_panels.gif) | ![alt text](readme_assets/discord_panels.gif) |
+
 Installation
 -------
 Add the JitPack repository to your root `build.gradle` file:
