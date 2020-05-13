@@ -9,7 +9,7 @@ apps that use a bottom navigation bar / tabs as a primary navigation component.
 **OverlappingPanels Examples**
 | OverlappingPanels Sample App | Discord Android App |
 | -- | -- |
-| ![alt text](readme_assets/sample_app_panels.gif) | ![alt text](readme_assets/discord_panels.gif) |
+| ![alt text](readme_assets/sample_app_panels_example.gif) | ![alt text](readme_assets/discord_panels_example.gif) |
 
 Installation
 -------
