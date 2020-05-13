@@ -1,15 +1,15 @@
-# OverlappingPanels
+![alt text](readme_assets/overlapping_panels_title_with_icon.png "Overlapping Panels")
 
 [![Build Status](https://travis-ci.org/discord/OverlappingPanels.svg?branch=master)](https://travis-ci.org/discord/OverlappingPanels)
 
-OverlappingPanels is a gestures-driven navigation UI library for Android. Compared to DrawerLayout
-gestures, OverlappingPanels gestures are much less likely to conflict with Android 10's system back
+Overlapping Panels is a gestures-driven navigation UI library for Android. Compared to DrawerLayout
+gestures, Overlapping Panels gestures are much less likely to conflict with Android 10's system back
 gestures because `OverlappingPanelsLayout` handles swipe gestures across its entire layout and not
-only from the edges of the screen. OverlappingPanels can act as a secondary navigation component in
+only from the edges of the screen. Overlapping Panels can act as a secondary navigation component in
 apps that use a bottom navigation bar / tabs as a primary navigation component.
 
-**OverlappingPanels Examples**
-| OverlappingPanels Sample App | Discord Android App |
+**Overlapping Panels Examples**
+| Overlapping Panels Sample App | Discord Android App |
 | -- | -- |
 | ![alt text](readme_assets/sample_app_panels.gif) | ![alt text](readme_assets/discord_panels.gif) |
 
@@ -25,7 +25,7 @@ allprojects {
 }
 ```
 
-Then add the OverlappingPanels gradle dependency:
+Then add the Overlapping Panels gradle dependency:
 ```gradle
 dependencies {
     implementation 'com.github.discord:OverlappingPanels:x.y.z'
@@ -33,7 +33,7 @@ dependencies {
 ```
 
 Replace `x`, `y`, and `z` with the corresponding release version numbers in the
-[OverlappingPanels release page](https://github.com/discord/OverlappingPanels/releases).
+[Overlapping Panels release page](https://github.com/discord/OverlappingPanels/releases).
 
 
 Basic Usage
