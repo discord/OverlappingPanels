@@ -1,5 +1,7 @@
 # OverlappingPanels
 
+[![Build Status](https://travis-ci.org/discord/OverlappingPanels.svg?branch=master)](https://travis-ci.org/discord/OverlappingPanels)
+
 OverlappingPanels is a gestures-driven navigation UI library for Android. Compared to DrawerLayout
 gestures, OverlappingPanels gestures are much less likely to conflict with Android 10's system back
 gestures because `OverlappingPanelsLayout` handles swipe gestures across its entire layout and not
@@ -14,7 +16,7 @@ apps that use a bottom navigation bar / tabs as a primary navigation component.
 Installation
 -------
 Add the JitPack repository to your root `build.gradle` file:
-```groovy
+```gradle
 allprojects {
     repositories {
         ...
@@ -24,7 +26,7 @@ allprojects {
 ```
 
 Then add the OverlappingPanels gradle dependency:
-```groovy
+```gradle
 dependencies {
     implementation 'com.github.discord:OverlappingPanels:x.y.z'
 }
