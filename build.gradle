@@ -7,7 +7,9 @@ buildscript {
     ext.ktlintVersion = '0.36.0'
     ext.ktlintGradlePluginVersion = '9.2.1'
     ext.junitVersion = '4.12'
+    ext.robolectricVersion = '4.3.1'
     ext.rxJavaVersion = '3.0.3'
+    ext.truthVersion = '0.40'
 
     repositories {
         google()

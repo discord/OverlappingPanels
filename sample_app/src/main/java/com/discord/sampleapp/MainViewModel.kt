@@ -1,7 +1,8 @@
-package com.discord.panels
+package com.discord.sampleapp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.discord.panels.PanelState
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 

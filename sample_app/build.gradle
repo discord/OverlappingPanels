@@ -42,6 +42,12 @@ android {
         // Used specific lint checks and suppression.
         lintConfig file("../tools/lint.xml")
     }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -53,4 +59,9 @@ dependencies {
     implementation project(':overlapping_panels')
 
     testImplementation "junit:junit:$junitVersion"
+    testImplementation "com.google.truth:truth:$truthVersion"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+
+    testAnnotationProcessor "org.robolectric:robolectric:$robolectricVersion"
+
 }
