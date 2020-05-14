@@ -1,4 +1,4 @@
-![alt text](readme_assets/overlapping_panels_title.png "Overlapping Panels")
+![alt text](readme_assets/overlapping_panels_title_with_icon.png "Overlapping Panels")
 
 [![Build Status](https://travis-ci.org/discord/OverlappingPanels.svg?branch=master)](https://travis-ci.org/discord/OverlappingPanels)
 
