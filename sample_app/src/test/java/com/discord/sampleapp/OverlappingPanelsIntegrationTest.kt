@@ -41,6 +41,9 @@ class OverlappingPanelsIntegrationTest {
       )
 
     overlappingPanelsLayout = root.findViewById(R.id.overlapping_panels) as OverlappingPanelsLayout
+
+    // OverlappingPanelsLayout initializes its references to the child panels in onLayout, so
+    // we need to explicitly trigger the layout pass here.
     overlappingPanelsLayout.layout(0 /* l */, 0 /* t */, 480 /* r */, 480 /* b */)
   }
 
