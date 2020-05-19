@@ -417,13 +417,13 @@ open class OverlappingPanelsLayout : FrameLayout {
   fun handleStartPanelState(startPanelState: PanelState) {
     val previousStartPanelState = this.startPanelState
     when {
-      (startPanelState is PanelState.Opened &&
-          previousStartPanelState !is PanelState.Opened) -> {
+      (startPanelState == PanelState.Opened &&
+          previousStartPanelState != PanelState.Opened) -> {
         openStartPanel()
       }
 
-      (startPanelState is PanelState.Closed &&
-          previousStartPanelState is PanelState.Opened) -> {
+      (startPanelState == PanelState.Closed &&
+          previousStartPanelState == PanelState.Opened) -> {
         closePanels()
       }
     }
@@ -444,13 +444,13 @@ open class OverlappingPanelsLayout : FrameLayout {
     val previousEndPanelState = this.endPanelState
 
     when {
-      (endPanelState is PanelState.Opened &&
-          previousEndPanelState !is PanelState.Opened) -> {
+      (endPanelState == PanelState.Opened &&
+          previousEndPanelState != PanelState.Opened) -> {
         openEndPanel()
       }
 
       (endPanelState is PanelState.Closed &&
-          previousEndPanelState is PanelState.Opened) -> {
+          previousEndPanelState == PanelState.Opened) -> {
         closePanels()
       }
     }
@@ -764,11 +764,10 @@ open class OverlappingPanelsLayout : FrameLayout {
   }
 
   private fun getStartPanelState(previousX: Float, x: Float): PanelState {
-    val isLockedOpen = startPanelLockState == LockState.OPEN
     return when {
       isLeftToRight && x <= 0F -> PanelState.Closed
       !isLeftToRight && x >= 0f -> PanelState.Closed
-      x == startPanelOpenedCenterPanelX -> PanelState.Opened(isLocked = isLockedOpen)
+      x == startPanelOpenedCenterPanelX -> PanelState.Opened
       isLeftToRight && x > previousX -> PanelState.Opening
       !isLeftToRight && x < previousX -> PanelState.Opening
       else -> PanelState.Closing
@@ -776,11 +775,10 @@ open class OverlappingPanelsLayout : FrameLayout {
   }
 
   private fun getEndPanelState(previousX: Float, x: Float): PanelState {
-    val isLockedOpen = endPanelLockState == LockState.OPEN
     return when {
       isLeftToRight && x >= 0F -> PanelState.Closed
       !isLeftToRight && x <= 0f -> PanelState.Closed
-      x == endPanelOpenedCenterPanelX -> PanelState.Opened(isLocked = isLockedOpen)
+      x == endPanelOpenedCenterPanelX -> PanelState.Opened
       isLeftToRight && x < previousX -> PanelState.Opening
       !isLeftToRight && x > previousX -> PanelState.Opening
       else -> PanelState.Closing
