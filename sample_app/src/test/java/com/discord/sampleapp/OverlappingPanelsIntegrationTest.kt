@@ -69,11 +69,7 @@ class OverlappingPanelsIntegrationTest {
     dispatchSwipeRightGesture(overlappingPanelsLayout)
     runPendingAnimations()
 
-    Truth.assertThat(startPanelState).isEqualTo(
-      PanelState.Opened(
-        isLocked = false
-      )
-    )
+    Truth.assertThat(startPanelState).isEqualTo(PanelState.Opened)
 
     Truth.assertThat(endPanelState).isEqualTo(
       PanelState.Closed
@@ -106,11 +102,7 @@ class OverlappingPanelsIntegrationTest {
       PanelState.Closed
     )
 
-    Truth.assertThat(endPanelState).isEqualTo(
-      PanelState.Opened(
-        isLocked = false
-      )
-    )
+    Truth.assertThat(endPanelState).isEqualTo(PanelState.Opened)
   }
 
   @Test
@@ -127,7 +119,7 @@ class OverlappingPanelsIntegrationTest {
     overlappingPanelsLayout.openStartPanel()
     runPendingAnimations()
 
-    Truth.assertThat(startPanelState).isEqualTo(PanelState.Opened(isLocked = false))
+    Truth.assertThat(startPanelState).isEqualTo(PanelState.Opened)
   }
 
   @Test
@@ -144,7 +136,7 @@ class OverlappingPanelsIntegrationTest {
     overlappingPanelsLayout.openEndPanel()
     runPendingAnimations()
 
-    Truth.assertThat(endPanelState).isEqualTo(PanelState.Opened(isLocked = false))
+    Truth.assertThat(endPanelState).isEqualTo(PanelState.Opened)
   }
 
   @Test
@@ -168,7 +160,7 @@ class OverlappingPanelsIntegrationTest {
 
     overlappingPanelsLayout.openStartPanel()
     runPendingAnimations()
-    Truth.assertThat(startPanelState).isEqualTo(PanelState.Opened(isLocked = false))
+    Truth.assertThat(startPanelState).isEqualTo(PanelState.Opened)
     Truth.assertThat(endPanelState).isEqualTo(PanelState.Closed)
 
     overlappingPanelsLayout.closePanels()
