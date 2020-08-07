@@ -1,4 +1,7 @@
 <lint>
     <!-- Not supported by Overlapping Panels at the moment. -->
     <issue id="ClickableViewAccessibility" severity="ignore" />
+
+    <!-- Don't error when there is a newer version of a gradle dependency available. -->
+    <issue id="GradleDependency" severity="informational" />
 </lint>
