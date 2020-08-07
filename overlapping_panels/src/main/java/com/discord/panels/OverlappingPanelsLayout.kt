@@ -745,6 +745,15 @@ open class OverlappingPanelsLayout : FrameLayout {
     val isCenterPanelClosed = x == endPanelOpenedCenterPanelX || x == startPanelOpenedCenterPanelX
     centerPanel.setEnabledAlpha(enabled = !isCenterPanelClosed, disabledAlpha = 0.5f)
 
+    // Hide the center panel from TalkBack if it's closed. This ensures
+    // that TalkBack does not traverse the off-screen content in the center panel
+    // when the side panels are expanded.
+    centerPanel.importantForAccessibility = if (isCenterPanelClosed) {
+      View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
+    } else {
+      View.IMPORTANT_FOR_ACCESSIBILITY_AUTO
+    }
+
     val isCenterPanelInRestingState = x == 0f || isCenterPanelClosed
     centerPanel.elevation = if (isCenterPanelInRestingState) {
       0f
