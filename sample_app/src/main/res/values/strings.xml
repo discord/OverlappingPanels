@@ -12,4 +12,5 @@
     <string name="scroll_item_3">scroll item 3</string>
     <string name="scroll_item_4">scroll item 4</string>
     <string name="scroll_item_5">scroll item 5</string>
+    <string name="show_toast">show toast</string>
 </resources>
