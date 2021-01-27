@@ -843,16 +843,16 @@ open class OverlappingPanelsLayout : FrameLayout {
   }
 
   private fun isTouchingCenterPanelWhileSidePanelOpen(event: MotionEvent): Boolean {
-    val rawX = event.rawX
+    val x = event.x
     val centerPanelX = centerPanel.x
 
     val maxCenterPanelX = max(startPanelOpenedCenterPanelX, endPanelOpenedCenterPanelX)
     val minCenterPanelX = min(startPanelOpenedCenterPanelX, endPanelOpenedCenterPanelX)
     val centerPanelRightEdgeXWhenRightPanelFullyOpen = minCenterPanelX + centerPanel.width
 
-    val isTouchingCenterPanelWithLeftPanelOpen = rawX > maxCenterPanelX
+    val isTouchingCenterPanelWithLeftPanelOpen = x > maxCenterPanelX
     val isTouchingCenterPanelWithRightPanelOpen =
-      rawX < centerPanelRightEdgeXWhenRightPanelFullyOpen
+      x < centerPanelRightEdgeXWhenRightPanelFullyOpen
     val isLeftPanelFullyOpen = centerPanelX == maxCenterPanelX
     val isRightPanelFullyOpen = centerPanelX == minCenterPanelX
 
