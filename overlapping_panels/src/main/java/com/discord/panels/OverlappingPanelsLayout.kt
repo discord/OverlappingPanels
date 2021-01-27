@@ -886,7 +886,6 @@ open class OverlappingPanelsLayout : FrameLayout {
     val previousStartPanelOpenedCenterPanelX = startPanelOpenedCenterPanelX
     val marginBetweenPanels =
       resources.getDimension(R.dimen.overlapping_panels_margin_between_panels)
-
     startPanelOpenedCenterPanelX = startPanel.width + marginBetweenPanels
     startPanelOpenedCenterPanelX =
       if (isLeftToRight) startPanelOpenedCenterPanelX else -startPanelOpenedCenterPanelX
