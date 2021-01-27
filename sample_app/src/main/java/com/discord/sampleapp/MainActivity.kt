@@ -1,14 +1,16 @@
 package com.discord.sampleapp
 
 import android.graphics.Rect
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.discord.panels.OverlappingPanelsLayout
 import com.discord.panels.PanelState
 import com.discord.panels.PanelsChildGestureRegionObserver
 import io.reactivex.rxjava3.disposables.Disposable
+
 
 class MainActivity : AppCompatActivity(),
   PanelsChildGestureRegionObserver.GestureRegionsListener {
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity(),
   private lateinit var overlappingPanels: OverlappingPanelsLayout
   private lateinit var openStartPanelButton: View
   private lateinit var horizontalScrollItemsContainer: View
+  private lateinit var showToastButton: View
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -50,6 +53,15 @@ class MainActivity : AppCompatActivity(),
     horizontalScrollItemsContainer.addOnLayoutChangeListener(
       PanelsChildGestureRegionObserver.Provider.get()
     )
+
+    showToastButton = findViewById(R.id.show_toast_button)
+    showToastButton.setOnClickListener {
+      Toast.makeText(
+        this,
+        "clicked button in start panel",
+        Toast.LENGTH_LONG
+      ).show()
+    }
 
     viewModel = ViewModelProvider(
       this,

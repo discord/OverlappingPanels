@@ -17,11 +17,13 @@
         android:id="@+id/overlapping_panels"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_grey">
+        android:background="@color/light_grey"
+        app:maxSidePanelNonFullScreenWidth="360dp">
 
         <LinearLayout
             android:id="@+id/start_panel"
             style="@style/Panel"
+            android:paddingEnd="0dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
@@ -30,6 +32,15 @@
             <TextView
                 style="@style/PanelHeader"
                 android:text="@string/start_panel_name" />
+
+            <Button
+                android:layout_marginTop="16dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/show_toast_button"
+                android:layout_gravity="end"
+                android:text="show toast" />
+
 
         </LinearLayout>
 
