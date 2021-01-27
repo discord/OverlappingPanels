@@ -11,7 +11,6 @@ import com.discord.panels.PanelState
 import com.discord.panels.PanelsChildGestureRegionObserver
 import io.reactivex.rxjava3.disposables.Disposable
 
-
 class MainActivity : AppCompatActivity(),
   PanelsChildGestureRegionObserver.GestureRegionsListener {
 
@@ -54,6 +53,8 @@ class MainActivity : AppCompatActivity(),
       PanelsChildGestureRegionObserver.Provider.get()
     )
 
+    // This button helps verify the accuracy of
+    // OverlappingPanelsLayout#isTouchingCenterPanelWhileSidePanelOpen()
     showToastButton = findViewById(R.id.show_toast_button)
     showToastButton.setOnClickListener {
       Toast.makeText(

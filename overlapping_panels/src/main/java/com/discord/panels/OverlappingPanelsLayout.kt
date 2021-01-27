@@ -7,7 +7,6 @@ import android.graphics.Rect
 import android.os.Build
 import android.text.TextUtils
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.VelocityTracker
 import android.view.View
@@ -130,7 +129,6 @@ open class OverlappingPanelsLayout : FrameLayout {
   }
 
   private fun initialize(attrs: AttributeSet?) {
-    Log.d("pikachu", "initialize")
     val locale = LocaleProvider.getPrimaryLocale(context)
     isLeftToRight = TextUtils.getLayoutDirectionFromLocale(locale) == View.LAYOUT_DIRECTION_LTR
     scrollingSlopPx = resources.getDimension(R.dimen.overlapping_panels_scroll_slop)
@@ -167,11 +165,6 @@ open class OverlappingPanelsLayout : FrameLayout {
           Int.MAX_VALUE.toFloat()
         ).toInt()
 
-      Log.d("pikachu", """
-        nonFullScreenSidePanelWidth: $nonFullScreenSidePanelWidth
-        maxSidePanelNonFullScreenWidth: $maxSidePanelNonFullScreenWidth
-      """.trimIndent())
-
       nonFullScreenSidePanelWidth = min(nonFullScreenSidePanelWidth, maxSidePanelNonFullScreenWidth)
     } finally {
       styledAttrs.recycle()
@@ -201,7 +194,6 @@ open class OverlappingPanelsLayout : FrameLayout {
       MotionEvent.ACTION_DOWN -> {
         isScrollingHorizontally = false
         wasActionDownOnClosedCenterPanel = isTouchingCenterPanelWhileSidePanelOpen(event)
-        Log.d("pikachu", "wasActionDownOnClosedCenterPanel: $wasActionDownOnClosedCenterPanel")
         centerPanelDiffX = centerPanel.x - event.rawX
 
         xFromInterceptActionDown = event.x
@@ -803,7 +795,6 @@ open class OverlappingPanelsLayout : FrameLayout {
   }
 
   private fun initPanels() {
-    Log.d("pikachu", "initPanels")
     startPanel = getChildAt(0)
     centerPanel = getChildAt(1)
     endPanel = getChildAt(2)
@@ -836,12 +827,9 @@ open class OverlappingPanelsLayout : FrameLayout {
     // user and then becomes non-full-screen after the user has channels or guilds), then
     // recalculate the min and max x values.
     startPanel.addOnLayoutChangeListener { _, left, _, right, _, oldLeft, _, oldRight, _ ->
-      Log.d("pikachu", "start panel on layout change. width: ${right - left}")
       if (isLeftToRight && right != oldRight) {
-        Log.d("pikachu", "start panel width changed 000")
         handleStartPanelWidthUpdate()
       } else if (!isLeftToRight && left != oldLeft) {
-        Log.d("pikachu", "start panel width changed 111")
         handleStartPanelWidthUpdate()
       }
     }
@@ -855,24 +843,16 @@ open class OverlappingPanelsLayout : FrameLayout {
   }
 
   private fun isTouchingCenterPanelWhileSidePanelOpen(event: MotionEvent): Boolean {
-    val rawX = event.rawX
+    val x = event.x
     val centerPanelX = centerPanel.x
-
-    Log.d("pikachu", """
-      isTouchingCenterPanelWhileSidePanelOpen
-      startPanelOpenedCenterPanelX: $startPanelOpenedCenterPanelX
-      endPanelOpenedCenterPanelX: $endPanelOpenedCenterPanelX
-      rawX: $rawX
-      centerPanelX: $centerPanelX
-    """.trimIndent())
 
     val maxCenterPanelX = max(startPanelOpenedCenterPanelX, endPanelOpenedCenterPanelX)
     val minCenterPanelX = min(startPanelOpenedCenterPanelX, endPanelOpenedCenterPanelX)
     val centerPanelRightEdgeXWhenRightPanelFullyOpen = minCenterPanelX + centerPanel.width
 
-    val isTouchingCenterPanelWithLeftPanelOpen = rawX > maxCenterPanelX
+    val isTouchingCenterPanelWithLeftPanelOpen = x > maxCenterPanelX
     val isTouchingCenterPanelWithRightPanelOpen =
-      rawX < centerPanelRightEdgeXWhenRightPanelFullyOpen
+      x < centerPanelRightEdgeXWhenRightPanelFullyOpen
     val isLeftPanelFullyOpen = centerPanelX == maxCenterPanelX
     val isRightPanelFullyOpen = centerPanelX == minCenterPanelX
 
@@ -906,13 +886,6 @@ open class OverlappingPanelsLayout : FrameLayout {
     val previousStartPanelOpenedCenterPanelX = startPanelOpenedCenterPanelX
     val marginBetweenPanels =
       resources.getDimension(R.dimen.overlapping_panels_margin_between_panels)
-
-    Log.d("pikachu", """
-      handleStartPanelWidthUpdate
-      start panel width: ${startPanel.width}
-      marginBetweenPanels: $marginBetweenPanels
-      density: ${resources.displayMetrics.density}
-    """.trimIndent())
 
     startPanelOpenedCenterPanelX = startPanel.width + marginBetweenPanels
     startPanelOpenedCenterPanelX =

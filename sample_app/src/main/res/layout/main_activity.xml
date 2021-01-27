@@ -17,8 +17,7 @@
         android:id="@+id/overlapping_panels"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_grey"
-        app:maxSidePanelNonFullScreenWidth="360dp">
+        android:background="@color/light_grey">
 
         <LinearLayout
             android:id="@+id/start_panel"
