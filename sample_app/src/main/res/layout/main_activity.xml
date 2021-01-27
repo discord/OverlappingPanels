@@ -22,24 +22,23 @@
         <LinearLayout
             android:id="@+id/start_panel"
             style="@style/Panel"
-            android:paddingEnd="0dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingEnd="0dp">
 
             <TextView
                 style="@style/PanelHeader"
                 android:text="@string/start_panel_name" />
 
             <Button
-                android:layout_marginTop="16dp"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
                 android:id="@+id/show_toast_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:layout_marginTop="16dp"
                 android:text="show toast" />
-
 
         </LinearLayout>
 
