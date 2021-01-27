@@ -1,6 +1,6 @@
 ![alt text](readme_assets/overlapping_panels_title_with_icon.png "Overlapping Panels")
 
-[![Build Status](https://travis-ci.org/discord/OverlappingPanels.svg?branch=master)](https://travis-ci.org/discord/OverlappingPanels)
+[![Build Status](https://travis-ci.com/discord/OverlappingPanels.svg?branch=master)](https://travis-ci.com/discord/OverlappingPanels)
 
 Overlapping Panels is a gestures-driven navigation UI library for Android. Compared to DrawerLayout
 gestures, Overlapping Panels gestures are much less likely to conflict with Android 10's system back
