@@ -2,13 +2,23 @@ package com.discord.sampleapp
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.view.View
+import android.util.Log
+import android.view.*
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.discord.panels.OverlappingPanelsLayout
 import com.discord.panels.PanelState
 import com.discord.panels.PanelsChildGestureRegionObserver
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import io.reactivex.rxjava3.disposables.Disposable
 
 class MainActivity : AppCompatActivity(),
@@ -22,9 +32,19 @@ class MainActivity : AppCompatActivity(),
   private lateinit var horizontalScrollItemsContainer: View
   private lateinit var showToastButton: View
 
+  private lateinit var toolbar: Toolbar
+  private lateinit var tabLayout: TabLayout
+  private lateinit var viewPager: ViewPager2
+
+  private lateinit var centerPanelMainLayout: ViewGroup
+  private lateinit var viewPagerLayout: ViewGroup
+
+  private val adapter = ViewPagerAdapter(this)
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.main_activity)
+    setSupportActionBar(findViewById(R.id.toolbar))
     overlappingPanels = findViewById(R.id.overlapping_panels)
 
     openStartPanelButton = findViewById(R.id.open_start_panel_button)
@@ -68,6 +88,42 @@ class MainActivity : AppCompatActivity(),
       this,
       MainViewModel.Factory()
     ).get(MainViewModel::class.java)
+
+    centerPanelMainLayout = findViewById(R.id.center_panel_main_layout)
+    viewPagerLayout = findViewById(R.id.view_pager_layout)
+    viewPager = findViewById(R.id.view_pager)
+    tabLayout = findViewById(R.id.tabs)
+
+    viewPager.apply {
+      adapter = this@MainActivity.adapter
+      addOnLayoutChangeListener(PanelsChildGestureRegionObserver.Provider.get())
+      PanelsChildGestureRegionObserver.Provider.get().register(this)
+    }
+
+    TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+      tab.text = "Text $position"
+    }.attach()
+
+    tabLayout.apply {
+      addOnLayoutChangeListener(PanelsChildGestureRegionObserver.Provider.get())
+      PanelsChildGestureRegionObserver.Provider.get().register(this)
+    }
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    menuInflater.inflate(R.menu.menu_activity, menu)
+    return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    Log.e("What is happening", "huh")
+    when (item.itemId) {
+      R.id.view_pager_menu_item -> {
+        viewPagerLayout.isVisible = !viewPagerLayout.isVisible
+        centerPanelMainLayout.isVisible = !centerPanelMainLayout.isVisible
+      }
+    }
+    return super.onOptionsItemSelected(item)
   }
 
   override fun onResume() {
@@ -121,5 +177,41 @@ class MainActivity : AppCompatActivity(),
   private fun handleViewState(viewState: MainViewModel.ViewState) {
     overlappingPanels.handleStartPanelState(viewState.startPanelState)
     overlappingPanels.handleEndPanelState(viewState.endPanelState)
+  }
+}
+
+class ViewPagerAdapter(
+  activity: FragmentActivity
+) : FragmentStateAdapter(activity) {
+
+  override fun getItemCount() = 7
+
+  override fun createFragment(position: Int) = MainFragment().apply {
+    this.position = position
+  }
+}
+
+class MainFragment : Fragment() {
+  val colors = listOf(
+    R.color.one,
+    R.color.two,
+    R.color.three,
+    R.color.four,
+    R.color.five,
+    R.color.six,
+    R.color.seven
+  )
+
+  var position: Int = 0
+
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    val view = inflater.inflate(R.layout.fragment_main, container, true)
+    val colorView = view.findViewById<View>(R.id.color)
+    colorView.setBackgroundColor(ContextCompat.getColor(requireContext(), colors[position]))
+    return view
   }
 }

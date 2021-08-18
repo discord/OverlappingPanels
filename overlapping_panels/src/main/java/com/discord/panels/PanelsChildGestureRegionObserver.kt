@@ -104,7 +104,7 @@ class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
    * Stop publishing gesture region updates based on layout and scroll changes to android.view.View
    */
   @UiThread
-  fun remove(view: View) {
+  fun unregister(view: View) {
     viewIdToListenerMap.remove(view.id)?.let {
       view.viewTreeObserver.removeOnScrollChangedListener(it)
     }
