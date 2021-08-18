@@ -2,7 +2,9 @@ package com.discord.panels
 
 import android.graphics.Rect
 import android.view.View
+import android.view.ViewTreeObserver
 import androidx.annotation.UiThread
+import com.discord.panels.PanelsChildGestureRegionObserver.GestureRegionsListener
 import java.lang.ref.WeakReference
 
 /**
@@ -28,11 +30,12 @@ class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
     fun onGestureRegionsUpdate(gestureRegions: List<Rect>)
   }
 
-  private var viewIdToGestureRegionMap = mutableMapOf<Int, Rect>()
-  private var gestureRegionsListeners = mutableSetOf<GestureRegionsListener>()
+  private val viewIdToGestureRegionMap = mutableMapOf<Int, Rect>()
+  private val viewIdToListenerMap = mutableMapOf<Int, ViewTreeObserver.OnScrollChangedListener>()
+  private val gestureRegionsListeners = mutableSetOf<GestureRegionsListener>()
 
   override fun onLayoutChange(
-    view: View?,
+    view: View,
     left: Int,
     top: Int,
     right: Int,
@@ -42,36 +45,73 @@ class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
     oldRight: Int,
     oldBottom: Int
   ) {
-    if (view != null) {
-      val coordinates = intArrayOf(0, 0)
-      view.getLocationOnScreen(coordinates)
+    val coordinates = intArrayOf(0, 0)
+    view.getLocationInWindow(coordinates)
 
-      val x = coordinates[0]
-      val y = coordinates[1]
+    val x = coordinates[0]
+    val y = coordinates[1]
 
-      val absoluteLeft = x + left
-      val absoluteTop = y + top
-      val absoluteRight = x + right
-      val absoluteBottom = y + bottom
+    val absoluteRight = x + right
+    val absoluteBottom = y + bottom
 
-      viewIdToGestureRegionMap[view.id] = Rect(
-        absoluteLeft,
-        absoluteTop,
-        absoluteRight,
-        absoluteBottom
+    viewIdToGestureRegionMap[view.id] = Rect(
+      x,
+      y,
+      absoluteRight,
+      absoluteBottom
+    )
+
+    publishGestureRegionsUpdate()
+  }
+
+  @UiThread
+  fun register(view: View) {
+    view.addOnLayoutChangeListener(this)
+
+    val listener = ViewTreeObserver.OnScrollChangedListener {
+      onLayoutChange(
+        view = view,
+        left = view.left,
+        top = view.top,
+        right = view.right,
+        bottom = view.bottom,
+        oldLeft = 0,
+        oldTop = 0,
+        oldRight = 0,
+        oldBottom = 0
       )
-
-      publishGestureRegionsUpdate()
     }
+
+    view.viewTreeObserver.addOnScrollChangedListener(listener)
+    viewIdToListenerMap[view.id] = listener
   }
 
   /**
    * Stop publishing gesture region updates based on layout changes to android.view.View
    * corresponding to [viewId].
    */
+  @Deprecated(
+    message = "Use unregister instead",
+    replaceWith = ReplaceWith("unregister(view)")
+  )
   @UiThread
   fun remove(viewId: Int) {
     viewIdToGestureRegionMap.remove(viewId)
+    publishGestureRegionsUpdate()
+  }
+
+  /**
+   * Stop publishing gesture region updates based on layout and scroll changes to android.view.View
+   */
+  @UiThread
+  fun unregister(view: View) {
+    viewIdToListenerMap.remove(view.id)?.let {
+      view.viewTreeObserver.removeOnScrollChangedListener(it)
+    }
+
+    view.removeOnLayoutChangeListener(this)
+
+    viewIdToGestureRegionMap.remove(view.id)
     publishGestureRegionsUpdate()
   }
 

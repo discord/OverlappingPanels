@@ -10,6 +10,8 @@ buildscript {
     ext.robolectricVersion = '4.3.1'
     ext.rxJavaVersion = '3.0.3'
     ext.truthVersion = '0.40'
+    ext.coordinatorLayoutVersion = '1.1.0'
+    ext.materialDesignVersion = '1.4.0'
 
     repositories {
         google()

@@ -8,8 +8,12 @@ android {
     buildToolsVersion "29.0.2"
 
     compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8.toString()
+        targetCompatibility JavaVersion.VERSION_1_8.toString()
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
     defaultConfig {
@@ -57,6 +61,8 @@ dependencies {
     implementation "androidx.core:core-ktx:$androidxCoreVersion"
     implementation "io.reactivex.rxjava3:rxjava:$rxJavaVersion"
     implementation project(':overlapping_panels')
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$coordinatorLayoutVersion"
+    implementation "com.google.android.material:material:$materialDesignVersion"
 
     testImplementation "junit:junit:$junitVersion"
     testImplementation "com.google.truth:truth:$truthVersion"
