@@ -109,6 +109,8 @@ class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
       view.viewTreeObserver.removeOnScrollChangedListener(it)
     }
 
+    view.removeOnLayoutChangeListener(this)
+
     viewIdToGestureRegionMap.remove(view.id)
     publishGestureRegionsUpdate()
   }

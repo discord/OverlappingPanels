@@ -2,10 +2,12 @@ package com.discord.sampleapp
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -32,7 +34,6 @@ class MainActivity : AppCompatActivity(),
   private lateinit var horizontalScrollItemsContainer: View
   private lateinit var showToastButton: View
 
-  private lateinit var toolbar: Toolbar
   private lateinit var tabLayout: TabLayout
   private lateinit var viewPager: ViewPager2
 
@@ -116,7 +117,6 @@ class MainActivity : AppCompatActivity(),
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    Log.e("What is happening", "huh")
     when (item.itemId) {
       R.id.view_pager_menu_item -> {
         viewPagerLayout.isVisible = !viewPagerLayout.isVisible
@@ -167,7 +167,10 @@ class MainActivity : AppCompatActivity(),
   override fun onDestroy() {
     super.onDestroy()
 
+    @Suppress("DEPRECATION")
     PanelsChildGestureRegionObserver.Provider.get().remove(horizontalScrollItemsContainer.id)
+    PanelsChildGestureRegionObserver.Provider.get().unregister(viewPager)
+    PanelsChildGestureRegionObserver.Provider.get().unregister(tabLayout)
   }
 
   override fun onGestureRegionsUpdate(gestureRegions: List<Rect>) {
@@ -192,7 +195,7 @@ class ViewPagerAdapter(
 }
 
 class MainFragment : Fragment() {
-  val colors = listOf(
+  private val colors = listOf(
     R.color.one,
     R.color.two,
     R.color.three,
