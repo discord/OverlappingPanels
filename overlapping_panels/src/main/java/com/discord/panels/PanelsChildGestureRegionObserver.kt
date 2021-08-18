@@ -2,6 +2,7 @@ package com.discord.panels
 
 import android.graphics.Rect
 import android.view.View
+import android.view.ViewTreeObserver
 import androidx.annotation.UiThread
 import com.discord.panels.PanelsChildGestureRegionObserver.GestureRegionsListener
 import java.lang.ref.WeakReference
@@ -29,8 +30,9 @@ class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
     fun onGestureRegionsUpdate(gestureRegions: List<Rect>)
   }
 
-  private var viewIdToGestureRegionMap = mutableMapOf<Int, Rect>()
-  private var gestureRegionsListeners = mutableSetOf<GestureRegionsListener>()
+  private val viewIdToGestureRegionMap = mutableMapOf<Int, Rect>()
+  private val viewIdToListenerMap = mutableMapOf<Int, ViewTreeObserver.OnScrollChangedListener>()
+  private val gestureRegionsListeners = mutableSetOf<GestureRegionsListener>()
 
   override fun onLayoutChange(
     view: View,
@@ -63,9 +65,10 @@ class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
   }
 
   @UiThread
-  fun add(view: View) {
+  fun register(view: View) {
     view.addOnLayoutChangeListener(this)
-    view.viewTreeObserver.addOnScrollChangedListener {
+
+    val listener = ViewTreeObserver.OnScrollChangedListener {
       onLayoutChange(
         view = view,
         left = view.left,
@@ -78,15 +81,35 @@ class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
         oldBottom = 0
       )
     }
+
+    view.viewTreeObserver.addOnScrollChangedListener(listener)
+    viewIdToListenerMap[view.id] = listener
   }
 
   /**
    * Stop publishing gesture region updates based on layout changes to android.view.View
    * corresponding to [viewId].
    */
+  @Deprecated(
+    message = "Use unregister instead",
+    replaceWith = ReplaceWith("unregister(view)")
+  )
   @UiThread
   fun remove(viewId: Int) {
     viewIdToGestureRegionMap.remove(viewId)
+    publishGestureRegionsUpdate()
+  }
+
+  /**
+   * Stop publishing gesture region updates based on layout and scroll changes to android.view.View
+   */
+  @UiThread
+  fun remove(view: View) {
+    viewIdToListenerMap.remove(view.id)?.let {
+      view.viewTreeObserver.removeOnScrollChangedListener(it)
+    }
+
+    viewIdToGestureRegionMap.remove(view.id)
     publishGestureRegionsUpdate()
   }
 
