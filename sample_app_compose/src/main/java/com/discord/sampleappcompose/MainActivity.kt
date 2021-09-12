@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
                 color = MaterialTheme.colors.background,
                 onClick = {
                   coroutineScope.launch {
-                    panelState.closePanel()
+                    panelState.closePanels()
                   }
                 }
               ) {

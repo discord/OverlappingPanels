@@ -29,10 +29,31 @@ private const val animationDuration = 200
 
 private val MarginBetweenPanels = 16.dp
 
+/**
+ * Possible values for [OverlappingPanels]
+ */
 enum class OverlappingPanelsValue {
-  OpenRight, OpenLeft, Closed
+
+  /**
+   * Start panel is opened
+   */
+  OpenStart,
+
+  /**
+   * End panel is opened
+   */
+  OpenEnd,
+
+  /**
+   * Both panels are closed
+   */
+  Closed
 }
 
+/**
+ * @param initialValue Initial state of the panels, can only be one of [OverlappingPanelsValue]
+ * @param confirmStateChange Whether to consume the change.
+ */
 @ExperimentalMaterialApi
 class OverlappingPanelsState(
   initialValue: OverlappingPanelsValue,
@@ -45,31 +66,47 @@ class OverlappingPanelsState(
     confirmStateChange = confirmStateChange
   )
 
+
+  /**
+   * Current [value][OverlappingPanelsValue]
+   */
   val currentValue
     get() = swipeableState.currentValue
 
+  /**
+   * Center panel offset
+   */
   val offset
     get() = swipeableState.offset
 
-  val isPanelClosed
+  val isPanelsClosed
     get() = currentValue == OverlappingPanelsValue.Closed
 
   val isEndPanelOpen
-    get() = currentValue == OverlappingPanelsValue.OpenRight
+    get() = currentValue == OverlappingPanelsValue.OpenStart
 
   val isStartPanelOpen
-    get() = currentValue == OverlappingPanelsValue.OpenLeft
+    get() = currentValue == OverlappingPanelsValue.OpenEnd
 
-  suspend fun closePanel() {
-    swipeableState.animateTo(OverlappingPanelsValue.Closed)
-  }
-
-  suspend fun openEndPanel() {
-    swipeableState.animateTo(OverlappingPanelsValue.OpenRight)
-  }
-
+  /**
+   * Open End Panel with animation
+   */
   suspend fun openStartPanel() {
-    swipeableState.animateTo(OverlappingPanelsValue.OpenLeft)
+    swipeableState.animateTo(OverlappingPanelsValue.OpenEnd)
+  }
+
+  /**
+   * Open End Panel with animation
+   */
+  suspend fun openEndPanel() {
+    swipeableState.animateTo(OverlappingPanelsValue.OpenStart)
+  }
+
+  /**
+   * Close panels with animation
+   */
+  suspend fun closePanels() {
+    swipeableState.animateTo(OverlappingPanelsValue.Closed)
   }
 
   companion object {
@@ -83,6 +120,10 @@ class OverlappingPanelsState(
   }
 }
 
+/**
+ * @param initialValue Initial state of the panels, can only be one of [OverlappingPanelsValue]
+ * @param confirmStateChange Whether to consume the change.
+ */
 @ExperimentalMaterialApi
 @Composable
 fun rememberOverlappingPanelsState(
@@ -94,6 +135,13 @@ fun rememberOverlappingPanelsState(
   }
 }
 
+/**
+ * @param modifier [Modifier]
+ * @param panelsState [Panel Controller][OverlappingPanelsState]
+ * @param panelStart Content for the start panel (replaced with `panelEnd` for the LTR layout)
+ * @param panelCenter Content for the center panel
+ * @param panelEnd Content for the center panel (replaced with `panelStart` for the LTR layout)
+ */
 @ExperimentalMaterialApi
 @Composable
 fun OverlappingPanels(
@@ -134,9 +182,9 @@ fun OverlappingPanels(
     )
 
     val anchors = mapOf(
-      offsetValue to OverlappingPanelsValue.OpenLeft,
+      offsetValue to OverlappingPanelsValue.OpenEnd,
       0f to OverlappingPanelsValue.Closed,
-      -offsetValue to OverlappingPanelsValue.OpenRight
+      -offsetValue to OverlappingPanelsValue.OpenStart
     )
 
     Box(
