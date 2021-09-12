@@ -28,7 +28,11 @@ allprojects {
 Then add the Overlapping Panels gradle dependency:
 ```gradle
 dependencies {
+    // XML
     implementation 'com.github.discord:OverlappingPanels:x.y.z'
+    
+    //Jetpack Compose
+    implementation 'com.github.discord:OverlappingPanelsCompose:x.y.z'
 }
 ```
 
@@ -38,6 +42,8 @@ Replace `x`, `y`, and `z` with the corresponding release version numbers in the
 
 Basic Usage
 -------
+
+### XML
 `OverlappingPanelsLayout` is a `ViewGroup` that expects exactly three child views that represent
 the start panel, center panel, and end panel. The simplest way to use `OverlappingPanelsLayout`
 is to wrap the panel content in XML:
@@ -80,16 +86,30 @@ is to wrap the panel content in XML:
 Wrapping the panel content in `OverlappingPanelsLayout` automatically enables panel gestures where
 swiping left and right will open and close the corresponding side panels.
 
+### Jetpack Compose
+
+```kt
+val panelState = rememberOverlappingPanelsState()
+OverlappingPanels(
+  modifier = Modifier.fillMaxSize(),
+  panelState = panelState,
+  panelStart = { /* Start Panel content */ },
+  panelCenter = { /* Center Panel content */ },
+  panelEnd = { /* End Panel content */ },
+)
+```
+
 Core Features
 -------
-Check out the [Overlapping Panels sample app](https://github.com/discord/OverlappingPanels/tree/master/sample_app)
+Check out the [Overlapping Panels sample app](/sample_app) and [Overlapping Panels Compose sample app](/sample_app_compose)
 for examples on how to use the core features of `OverlappingPanelsLayout`:
 
 1. Panel gestures
 2. Programmatically opening side panels
-3. Maintaining panel state through device rotations
-4. Registering child gesture regions that handle their own horizontal scrolls
-
+3. Maintaining panel state through device rotations*
+4. Registering child gesture regions that handle their own horizontal scrolls*  
+  
+* Not applicable for Jetpack Compose version
 
 License
 -------
