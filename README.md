@@ -109,7 +109,7 @@ for examples on how to use the core features of `OverlappingPanelsLayout`:
 3. Maintaining panel state through device rotations*
 4. Registering child gesture regions that handle their own horizontal scrolls*  
   
-*Not applicable for Jetpack Compose version
+*Not applicable for OverlappingPanels Compose
 
 License
 -------
