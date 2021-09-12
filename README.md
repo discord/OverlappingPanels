@@ -92,7 +92,7 @@ swiping left and right will open and close the corresponding side panels.
 val panelsState = rememberOverlappingPanelsState()
 OverlappingPanels(
   modifier = Modifier.fillMaxSize(),
-  panelsState = panelState,
+  panelsState = panelsState,
   panelStart = { /* Start Panel content */ },
   panelCenter = { /* Center Panel content */ },
   panelEnd = { /* End Panel content */ },
