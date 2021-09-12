@@ -1,17 +1,18 @@
 buildscript {
+    ext.androidMavenGradlePluginVersion = '2.1'
     ext.androidxAppCompatVersion = '1.1.0'
     ext.androidxCoreVersion = '1.2.0'
-    ext.androidMavenGradlePluginVersion = '2.1'
+    ext.composeVersion = '1.0.2'
+    ext.coordinatorLayoutVersion = '1.1.0'
     ext.gradlePluginVersion = '7.0.2'
-    ext.kotlinVersion = '1.5.21'
-    ext.ktlintVersion = '0.36.0'
-    ext.ktlintGradlePluginVersion = '9.2.1'
     ext.junitVersion = '4.12'
+    ext.kotlinVersion = '1.5.21'
+    ext.ktlintGradlePluginVersion = '9.2.1'
+    ext.ktlintVersion = '0.36.0'
+    ext.materialDesignVersion = '1.4.0'
     ext.robolectricVersion = '4.3.1'
     ext.rxJavaVersion = '3.0.3'
     ext.truthVersion = '0.40'
-    ext.coordinatorLayoutVersion = '1.1.0'
-    ext.materialDesignVersion = '1.4.0'
 
     repositories {
         google()

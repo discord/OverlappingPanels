@@ -1,3 +1,5 @@
 rootProject.name='Overlapping Panels'
 include ':sample_app'
 include ':overlapping_panels'
+include ':overlapping_panels_compose'
+include ':sample_app_compose'

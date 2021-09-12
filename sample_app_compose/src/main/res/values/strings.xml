@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Overlapping Panels</string>
+    <string name="start_panel_name">Start Panel</string>
+    <string name="center_panel_name">Center Panel</string>
+    <string name="end_panel_name">End Panel</string>
+    <string name="swipe_gesture_instructions">Swipe left or right to open side panels with gestures.</string>
+    <string name="open_panel_programmatically_instructions">Alternatively, call methods like openStartPanel() or openEndPanel() (e.g. in response to a button click).</string>
+    <string name="open_start_panel_button_text">Open Start Panel</string>
+    <string name="open_end_panel_button_text">Open End Panel</string>
+    <string name="child_gesture_region_instructions">Child horizontally scrollable items override the panel gestures.</string>
+    <string name="scroll_item">scroll item %1$s</string>
+</resources>
