@@ -29,14 +29,14 @@ private const val animationDuration = 200
 
 private val MarginBetweenPanels = 16.dp
 
-enum class OverlappingPanelValue {
+enum class OverlappingPanelsValue {
   OpenRight, OpenLeft, Closed
 }
 
 @ExperimentalMaterialApi
-class OverlappingPanelState(
-  initialValue: OverlappingPanelValue,
-  confirmStateChange: (OverlappingPanelValue) -> Boolean = { true },
+class OverlappingPanelsState(
+  initialValue: OverlappingPanelsValue,
+  confirmStateChange: (OverlappingPanelsValue) -> Boolean = { true },
 ) {
 
   val swipeableState = SwipeableState(
@@ -52,32 +52,32 @@ class OverlappingPanelState(
     get() = swipeableState.offset
 
   val isPanelClosed
-    get() = currentValue == OverlappingPanelValue.Closed
+    get() = currentValue == OverlappingPanelsValue.Closed
 
   val isEndPanelOpen
-    get() = currentValue == OverlappingPanelValue.OpenRight
+    get() = currentValue == OverlappingPanelsValue.OpenRight
 
   val isStartPanelOpen
-    get() = currentValue == OverlappingPanelValue.OpenLeft
+    get() = currentValue == OverlappingPanelsValue.OpenLeft
 
   suspend fun closePanel() {
-    swipeableState.animateTo(OverlappingPanelValue.Closed)
+    swipeableState.animateTo(OverlappingPanelsValue.Closed)
   }
 
   suspend fun openEndPanel() {
-    swipeableState.animateTo(OverlappingPanelValue.OpenRight)
+    swipeableState.animateTo(OverlappingPanelsValue.OpenRight)
   }
 
   suspend fun openStartPanel() {
-    swipeableState.animateTo(OverlappingPanelValue.OpenLeft)
+    swipeableState.animateTo(OverlappingPanelsValue.OpenLeft)
   }
 
   companion object {
 
-    fun Saver(confirmStateChange: (OverlappingPanelValue) -> Boolean) =
-      Saver<OverlappingPanelState, OverlappingPanelValue>(
+    fun Saver(confirmStateChange: (OverlappingPanelsValue) -> Boolean) =
+      Saver<OverlappingPanelsState, OverlappingPanelsValue>(
         save = { it.currentValue },
-        restore = { OverlappingPanelState(it, confirmStateChange) }
+        restore = { OverlappingPanelsState(it, confirmStateChange) }
       )
 
   }
@@ -85,12 +85,12 @@ class OverlappingPanelState(
 
 @ExperimentalMaterialApi
 @Composable
-fun rememberOverlappingPanelState(
-  initialValue: OverlappingPanelValue = OverlappingPanelValue.Closed,
-  confirmStateChange: (OverlappingPanelValue) -> Boolean = { true },
-): OverlappingPanelState {
-  return rememberSaveable(saver = OverlappingPanelState.Saver(confirmStateChange)) {
-    OverlappingPanelState(initialValue, confirmStateChange)
+fun rememberOverlappingPanelsState(
+  initialValue: OverlappingPanelsValue = OverlappingPanelsValue.Closed,
+  confirmStateChange: (OverlappingPanelsValue) -> Boolean = { true },
+): OverlappingPanelsState {
+  return rememberSaveable(saver = OverlappingPanelsState.Saver(confirmStateChange)) {
+    OverlappingPanelsState(initialValue, confirmStateChange)
   }
 }
 
@@ -98,7 +98,7 @@ fun rememberOverlappingPanelState(
 @Composable
 fun OverlappingPanels(
   modifier: Modifier = Modifier,
-  panelState: OverlappingPanelState = rememberOverlappingPanelState(initialValue = OverlappingPanelValue.Closed),
+  panelsState: OverlappingPanelsState = rememberOverlappingPanelsState(initialValue = OverlappingPanelsValue.Closed),
   panelStart: @Composable BoxScope.() -> Unit,
   panelCenter: @Composable BoxScope.() -> Unit,
   panelEnd: @Composable BoxScope.() -> Unit,
@@ -119,31 +119,31 @@ fun OverlappingPanels(
 
     val centerPanelAlpha by animateFloatAsState(
       targetValue = if (
-        panelState.offset.value == offsetValue ||
-        panelState.offset.value == -offsetValue
+        panelsState.offset.value == offsetValue ||
+        panelsState.offset.value == -offsetValue
       ) 0.7f else 1f,
       animationSpec = tween(animationDuration)
     )
 
     val elevation by animateDpAsState(
       targetValue = if (
-        panelState.offset.value == offsetValue ||
-        panelState.offset.value == -offsetValue
+        panelsState.offset.value == offsetValue ||
+        panelsState.offset.value == -offsetValue
       ) 0.dp else 8.dp,
       animationSpec = tween(animationDuration)
     )
 
     val anchors = mapOf(
-      offsetValue to OverlappingPanelValue.OpenLeft,
-      0f to OverlappingPanelValue.Closed,
-      -offsetValue to OverlappingPanelValue.OpenRight
+      offsetValue to OverlappingPanelsValue.OpenLeft,
+      0f to OverlappingPanelsValue.Closed,
+      -offsetValue to OverlappingPanelsValue.OpenRight
     )
 
     Box(
       modifier = Modifier
         .fillMaxSize()
         .swipeable(
-          state = panelState.swipeableState,
+          state = panelsState.swipeableState,
           orientation = Orientation.Horizontal,
           velocityThreshold = 400.dp,
           anchors = anchors,
@@ -156,7 +156,7 @@ fun OverlappingPanels(
           .fillMaxHeight()
           .fillMaxWidth(fraction)
           .align(if (isLtr) Alignment.CenterStart else Alignment.CenterEnd)
-          .alpha(if ((isLtr && panelState.offset.value > 0f) || (!isLtr && panelState.offset.value < 0f)) 1f else 0f),
+          .alpha(if ((isLtr && panelsState.offset.value > 0f) || (!isLtr && panelsState.offset.value < 0f)) 1f else 0f),
         content = if (isLtr) panelStart else panelEnd
       )
       Box(
@@ -164,7 +164,7 @@ fun OverlappingPanels(
           .fillMaxHeight()
           .fillMaxWidth(fraction)
           .align(if (isLtr) Alignment.CenterEnd else Alignment.CenterStart)
-          .alpha(if ((isLtr && panelState.offset.value < 0f) || (!isLtr && panelState.offset.value > 0f)) 1f else 0f),
+          .alpha(if ((isLtr && panelsState.offset.value < 0f) || (!isLtr && panelsState.offset.value > 0f)) 1f else 0f),
         content = if (isLtr) panelEnd else panelStart
       )
       Box(
@@ -174,7 +174,7 @@ fun OverlappingPanels(
           .alpha(centerPanelAlpha)
           .offset {
             IntOffset(
-              x = panelState.offset.value.roundToInt(),
+              x = panelsState.offset.value.roundToInt(),
               y = 0
             )
           }

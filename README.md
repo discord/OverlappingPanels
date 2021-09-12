@@ -89,10 +89,10 @@ swiping left and right will open and close the corresponding side panels.
 ### Jetpack Compose
 
 ```kt
-val panelState = rememberOverlappingPanelsState()
+val panelsState = rememberOverlappingPanelsState()
 OverlappingPanels(
   modifier = Modifier.fillMaxSize(),
-  panelState = panelState,
+  panelsState = panelState,
   panelStart = { /* Start Panel content */ },
   panelCenter = { /* Center Panel content */ },
   panelEnd = { /* End Panel content */ },

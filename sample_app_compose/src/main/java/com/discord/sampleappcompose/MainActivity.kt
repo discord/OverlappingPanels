@@ -14,7 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.discord.panels.OverlappingPanels
-import com.discord.panels.rememberOverlappingPanelState
+import com.discord.panels.rememberOverlappingPanelsState
 import com.discord.sampleappcompose.component.PanelColumn
 import com.discord.sampleappcompose.component.PanelHeaderText
 import com.discord.sampleappcompose.component.ScrollItem
@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     setContent {
       OverlappingPanelsTheme {
-        val panelState = rememberOverlappingPanelState()
+        val panelState = rememberOverlappingPanelsState()
         val coroutineScope = rememberCoroutineScope()
         Scaffold(
           topBar = {
@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
         ) {
           OverlappingPanels(
             modifier = Modifier.fillMaxSize(),
-            panelState = panelState,
+            panelsState = panelState,
             panelStart = {
               Surface(
                 modifier = Modifier.fillMaxSize(),
