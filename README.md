@@ -28,7 +28,6 @@ allprojects {
 Then add the Overlapping Panels gradle dependency:
 ```gradle
 dependencies {
-    // XML
     implementation 'com.github.discord:OverlappingPanels:x.y.z'
 }
 ```
