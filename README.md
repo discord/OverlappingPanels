@@ -30,9 +30,6 @@ Then add the Overlapping Panels gradle dependency:
 dependencies {
     // XML
     implementation 'com.github.discord:OverlappingPanels:x.y.z'
-    
-    //Jetpack Compose
-    implementation 'com.github.discord:OverlappingPanelsCompose:x.y.z'
 }
 ```
 
