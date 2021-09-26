@@ -102,7 +102,7 @@ for examples on how to use the core features of `OverlappingPanelsLayout`:
 
 1. Panel gestures
 2. Programmatically opening side panels
-3. Maintaining panel state through device rotations*
+3. Maintaining panel state through device rotations
 4. Registering child gesture regions that handle their own horizontal scrolls*  
   
 *Not applicable for OverlappingPanels Compose
