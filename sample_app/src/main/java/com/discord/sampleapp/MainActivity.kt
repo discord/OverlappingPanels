@@ -70,9 +70,7 @@ class MainActivity : AppCompatActivity(),
     // This will also work in other cases like child views in Fragments within MainActivity
     // because PanelsChildGestureRegionObserver.Provider.get() returns an Activity-scoped
     // singleton.
-    horizontalScrollItemsContainer.addOnLayoutChangeListener(
-      PanelsChildGestureRegionObserver.Provider.get()
-    )
+    PanelsChildGestureRegionObserver.Provider.get().register(horizontalScrollItemsContainer)
 
     // This button helps verify the accuracy of
     // OverlappingPanelsLayout#isTouchingCenterPanelWhileSidePanelOpen()
@@ -98,7 +96,6 @@ class MainActivity : AppCompatActivity(),
     viewPager.apply {
       adapter = this@MainActivity.adapter
       addOnLayoutChangeListener(PanelsChildGestureRegionObserver.Provider.get())
-      PanelsChildGestureRegionObserver.Provider.get().register(this)
     }
 
     TabLayoutMediator(tabLayout, viewPager) { tab, position ->
@@ -107,7 +104,6 @@ class MainActivity : AppCompatActivity(),
 
     tabLayout.apply {
       addOnLayoutChangeListener(PanelsChildGestureRegionObserver.Provider.get())
-      PanelsChildGestureRegionObserver.Provider.get().register(this)
     }
   }
 
@@ -119,7 +115,14 @@ class MainActivity : AppCompatActivity(),
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.view_pager_menu_item -> {
-        viewPagerLayout.isVisible = !viewPagerLayout.isVisible
+        val showViewPager = !viewPagerLayout.isVisible
+        viewPagerLayout.isVisible = showViewPager
+        if (showViewPager) {
+          PanelsChildGestureRegionObserver.Provider.get().register(viewPagerLayout)
+        } else {
+          PanelsChildGestureRegionObserver.Provider.get().unregister(viewPagerLayout)
+        }
+
         centerPanelMainLayout.isVisible = !centerPanelMainLayout.isVisible
       }
     }
@@ -167,8 +170,7 @@ class MainActivity : AppCompatActivity(),
   override fun onDestroy() {
     super.onDestroy()
 
-    @Suppress("DEPRECATION")
-    PanelsChildGestureRegionObserver.Provider.get().remove(horizontalScrollItemsContainer.id)
+    PanelsChildGestureRegionObserver.Provider.get().unregister(horizontalScrollItemsContainer)
     PanelsChildGestureRegionObserver.Provider.get().unregister(viewPager)
     PanelsChildGestureRegionObserver.Provider.get().unregister(tabLayout)
   }
