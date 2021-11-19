@@ -69,6 +69,10 @@ class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
 
   @UiThread
   fun register(view: View) {
+    if (viewIdToListenerMap.contains(view.id)) {
+      return
+    }
+
     view.addOnLayoutChangeListener(this)
 
     val listener = ViewTreeObserver.OnScrollChangedListener {
