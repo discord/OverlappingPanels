@@ -47,6 +47,9 @@ class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
     oldBottom: Int
   ) {
     Log.d("pikachu", "registered viewIDs: ${viewIdToGestureRegionMap.keys}")
+    if (!viewIdToListenerMap.keys.contains(view.id)) {
+      return
+    }
 
     val coordinates = intArrayOf(0, 0)
     view.getLocationInWindow(coordinates)
