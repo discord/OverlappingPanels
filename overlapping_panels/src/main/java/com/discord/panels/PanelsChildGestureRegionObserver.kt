@@ -48,7 +48,6 @@ class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
     if (!viewIdToListenerMap.keys.contains(view.id)) {
       return
     }
-    
     val coordinates = intArrayOf(0, 0)
     view.getLocationInWindow(coordinates)
 
