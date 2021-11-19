@@ -32,8 +32,6 @@ class MainActivity : AppCompatActivity(),
   private lateinit var overlappingPanels: OverlappingPanelsLayout
   private lateinit var openStartPanelButton: View
   private lateinit var horizontalScrollItemsContainer: View
-  private lateinit var addHorizontalScrollGestureRegionButton: View
-  private lateinit var removeHorizontalScrollGestureRegionButton: View
   private lateinit var showToastButton: View
 
   private lateinit var tabLayout: TabLayout
@@ -59,8 +57,6 @@ class MainActivity : AppCompatActivity(),
     }
 
     horizontalScrollItemsContainer = findViewById(R.id.scroll_items_container)
-    addHorizontalScrollGestureRegionButton = findViewById(R.id.add_horizontal_scroll_gesture_region_button)
-    removeHorizontalScrollGestureRegionButton = findViewById(R.id.remove_horizontal_scroll_gesture_region_button)
 
     // To not handle panel gestures on selected child views, e.g. if the child view has its own
     // horizontal scroll handling,
@@ -74,7 +70,9 @@ class MainActivity : AppCompatActivity(),
     // This will also work in other cases like child views in Fragments within MainActivity
     // because PanelsChildGestureRegionObserver.Provider.get() returns an Activity-scoped
     // singleton.
-//    PanelsChildGestureRegionObserver.Provider.get().register(horizontalScrollItemsContainer)
+    horizontalScrollItemsContainer.addOnLayoutChangeListener(
+      PanelsChildGestureRegionObserver.Provider.get()
+    )
 
     // This button helps verify the accuracy of
     // OverlappingPanelsLayout#isTouchingCenterPanelWhileSidePanelOpen()
@@ -100,7 +98,7 @@ class MainActivity : AppCompatActivity(),
     viewPager.apply {
       adapter = this@MainActivity.adapter
       addOnLayoutChangeListener(PanelsChildGestureRegionObserver.Provider.get())
-//      PanelsChildGestureRegionObserver.Provider.get().register(this)
+      PanelsChildGestureRegionObserver.Provider.get().register(this)
     }
 
     TabLayoutMediator(tabLayout, viewPager) { tab, position ->
@@ -109,7 +107,7 @@ class MainActivity : AppCompatActivity(),
 
     tabLayout.apply {
       addOnLayoutChangeListener(PanelsChildGestureRegionObserver.Provider.get())
-//      PanelsChildGestureRegionObserver.Provider.get().register(this)
+      PanelsChildGestureRegionObserver.Provider.get().register(this)
     }
   }
 
@@ -121,18 +119,7 @@ class MainActivity : AppCompatActivity(),
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.view_pager_menu_item -> {
-        val showViewPagerLayout = !viewPagerLayout.isVisible
-        if (!showViewPagerLayout) {
-          PanelsChildGestureRegionObserver.Provider.get().unregister(viewPagerLayout)
-
-        }
-
-        viewPagerLayout.isVisible = showViewPagerLayout
-        if (showViewPagerLayout) {
-          PanelsChildGestureRegionObserver.Provider.get().register(viewPagerLayout)
-          PanelsChildGestureRegionObserver.Provider.get().register(viewPagerLayout)
-        }
-
+        viewPagerLayout.isVisible = !viewPagerLayout.isVisible
         centerPanelMainLayout.isVisible = !centerPanelMainLayout.isVisible
       }
     }
@@ -182,7 +169,7 @@ class MainActivity : AppCompatActivity(),
 
     @Suppress("DEPRECATION")
     PanelsChildGestureRegionObserver.Provider.get().remove(horizontalScrollItemsContainer.id)
-//    PanelsChildGestureRegionObserver.Provider.get().unregister(viewPager)
+    PanelsChildGestureRegionObserver.Provider.get().unregister(viewPager)
     PanelsChildGestureRegionObserver.Provider.get().unregister(tabLayout)
   }
 

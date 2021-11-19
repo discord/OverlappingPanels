@@ -1,7 +1,6 @@
 package com.discord.panels
 
 import android.graphics.Rect
-import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.annotation.UiThread
@@ -46,11 +45,10 @@ class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
     oldRight: Int,
     oldBottom: Int
   ) {
-    Log.d("pikachu", "registered viewIDs: ${viewIdToGestureRegionMap.keys}")
     if (!viewIdToListenerMap.keys.contains(view.id)) {
       return
     }
-
+    
     val coordinates = intArrayOf(0, 0)
     view.getLocationInWindow(coordinates)
 
@@ -59,8 +57,6 @@ class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
 
     val absoluteRight = x + right
     val absoluteBottom = y + bottom
-
-    Log.d("pikachu", "onLayoutChange view ID: ${view.id}")
 
     viewIdToGestureRegionMap[view.id] = Rect(
       x,
@@ -92,8 +88,6 @@ class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
 
     view.viewTreeObserver.addOnScrollChangedListener(listener)
     viewIdToListenerMap[view.id] = listener
-
-    Log.d("pikachu", "add region for view ID: ${view.id}")
   }
 
   /**
@@ -122,10 +116,7 @@ class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
     view.removeOnLayoutChangeListener(this)
 
     viewIdToGestureRegionMap.remove(view.id)
-    Log.d("pikachu", "remove region for view ID: ${view.id}")
-
     publishGestureRegionsUpdate()
-
   }
 
   /**

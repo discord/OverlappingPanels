@@ -13,6 +13,4 @@
     <string name="scroll_item_4">scroll item 4</string>
     <string name="scroll_item_5">scroll item 5</string>
     <string name="show_toast">show toast</string>
-    <string name="add_horizontal_scroll_gesture_region">add horizontal scroll gesture region</string>
-    <string name="remove_horizontal_scroll_gesture_region">remove horizontal scroll gesture region</string>
 </resources>
