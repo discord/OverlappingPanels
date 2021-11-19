@@ -1,6 +1,7 @@
 package com.discord.panels
 
 import android.graphics.Rect
+import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.annotation.UiThread
@@ -70,6 +71,10 @@ class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
   @UiThread
   fun register(view: View) {
     if (viewIdToListenerMap.contains(view.id)) {
+      Log.w(
+        javaClass.simpleName,
+        "failed to register view with ID ${view.id}. already registered"
+      )
       return
     }
 
