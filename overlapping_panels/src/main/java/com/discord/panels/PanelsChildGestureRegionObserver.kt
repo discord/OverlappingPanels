@@ -16,14 +16,13 @@ import java.lang.ref.WeakReference
  * Example usage:
  * 1) Use [PanelsChildGestureRegionObserver.Provider.get] to get an Activity-scoped instance of
  * [PanelsChildGestureRegionObserver]
- * 2) Add the [PanelsChildGestureRegionObserver] instance as an android.view.OnLayoutChangeListener
- * to each child view.
+ * 2) Register the child gesture region View with the [register].
  * 3) In the parent of [OverlappingPanelsLayout], e.g. in a Fragment or Activity, implement
  * [GestureRegionsListener], and add the listener via [addGestureRegionsUpdateListener]
  * 4) Inside [GestureRegionsListener.onGestureRegionsUpdate], pass the child gesture regions to
  * [OverlappingPanelsLayout].
- * 5) Remember to remove views and listeners from [PanelsChildGestureRegionObserver] with [remove]
- * and [removeGestureRegionsUpdateListener] in appropriate Android lifecycle methods.
+ * 5) Remember to unregister the child gesture region with [unregister] in appropriate Android
+ * lifecycle methods.
  */
 class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
 
@@ -96,20 +95,6 @@ class PanelsChildGestureRegionObserver : View.OnLayoutChangeListener {
 
     view.viewTreeObserver.addOnScrollChangedListener(listener)
     viewIdToListenerMap[view.id] = listener
-  }
-
-  /**
-   * Stop publishing gesture region updates based on layout changes to android.view.View
-   * corresponding to [viewId].
-   */
-  @Deprecated(
-    message = "Use unregister instead",
-    replaceWith = ReplaceWith("unregister(view)")
-  )
-  @UiThread
-  fun remove(viewId: Int) {
-    viewIdToGestureRegionMap.remove(viewId)
-    publishGestureRegionsUpdate()
   }
 
   /**
