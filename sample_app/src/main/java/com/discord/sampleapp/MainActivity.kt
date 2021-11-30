@@ -60,13 +60,12 @@ class MainActivity : AppCompatActivity(),
 
     // To not handle panel gestures on selected child views, e.g. if the child view has its own
     // horizontal scroll handling,
-    // 1) Add PanelsChildGestureRegionObserver as an OnLayoutChangeListener on that child view
+    // 1) Register the child view as a gesture region.
     // 2) Make the host fragment / activity listen to child gesture region updates (e.g. in
     //    onResume()).
-    // 3) Remember to remove the listener (e.g. in onPause() for an Activity), and remove the
-    //    child view from PanelsChildGestureRegionObserver.
+    // 3) Remember to unregister the region (e.g. in onPause() for an Activity).
     //
-    // In this example, we're adding the OnLayoutChangeListener to a view in main_activity.xml.
+    // In this example, we're registering a view in main_activity.xml.
     // This will also work in other cases like child views in Fragments within MainActivity
     // because PanelsChildGestureRegionObserver.Provider.get() returns an Activity-scoped
     // singleton.
@@ -95,7 +94,7 @@ class MainActivity : AppCompatActivity(),
 
     viewPager.apply {
       adapter = this@MainActivity.adapter
-      addOnLayoutChangeListener(PanelsChildGestureRegionObserver.Provider.get())
+      PanelsChildGestureRegionObserver.Provider.get().register(this)
     }
 
     TabLayoutMediator(tabLayout, viewPager) { tab, position ->
@@ -103,7 +102,7 @@ class MainActivity : AppCompatActivity(),
     }.attach()
 
     tabLayout.apply {
-      addOnLayoutChangeListener(PanelsChildGestureRegionObserver.Provider.get())
+      PanelsChildGestureRegionObserver.Provider.get().register(tabLayout)
     }
   }
 
