@@ -1,7 +1,6 @@
 package com.discord.panels
 
 import android.graphics.Rect
-import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.annotation.UiThread
